@@ -1,4 +1,5 @@
 import conexion as c
+import paciente_datos as p
 #-----------------------------------------------------------------
 """
  -> PROYECTO: App que gestiona la actividad de COSMETÓLOGA.
@@ -16,6 +17,20 @@ print ("--------------------------------------------------------------")
 
 # --> pruebo creacion de BBDD <--
 c.conectar()
+
+# --> pruebo carga datos <--
+persona = {
+    "dni": "26896328",
+    "nombre": "Pablo",
+    "edad": 30,
+    "apellido": "Torrez",
+    "genero":  "masculino",
+    "celular": "1562358967",
+    "mail": "algo2@gmail.com"
+}
+prueba = p.carga_datos(persona)
+print("prueba de carga de paciente")
+print(prueba)
 
 
 #----> MENU: <----
