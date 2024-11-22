@@ -1,3 +1,5 @@
+import conexion as c
+#-----------------------------------------------------------------
 """
  -> PROYECTO: App que gestiona la actividad de COSMETÓLOGA.
  -> INTEGRANTES: 🔸 Ajalla, Deborah.
@@ -11,6 +13,10 @@
 """
 #-----------------------------------------------------------------
 print ("--------------------------------------------------------------")
+
+# --> pruebo creacion de BBDD <--
+c.conectar()
+
 
 #----> MENU: <----
 while True:
