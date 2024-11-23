@@ -1,0 +1,18 @@
+22/11:
+- DEBORAH:
+
+🔹 se crea archivo que CREA BD Y TABLA pacientes hay que agregar 1 tabla más. ❌
+🔹 se crea MENU DE OPCIONES:  -> en proceso opcion 4: mostar listado total 💜
+                              -> en proceso opcion 2: buscar un paciente por DNI 💜
+                                
+🔹 se valida que solo se cargue 1 paciente por DNI, MAIL y CELU --> no pueden estar repetidos!
+🔹
+🔹
+
+-------------------------------------------------------------
+--> TO DO:
+desarrollar 🔹  Modificar datos de Paciente ❌
+           
+            🔹  Eliminar datos de Paciente ❌
+
+validaciones de entrada de datos: 🔹 FALTAN TODAS!! ❌
