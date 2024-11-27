@@ -22,8 +22,10 @@ ________________________________________________________________________________
  -DEBORAH
 🔹 -> 27/11:
 > prueba v1: interfaz 😊
+> se añade campo domicilio en bd y en las funciones
+> se renombra funciones
+------------------------------------------------------------
 
--------------------------------------------------------------
 --> TO DO:
 desarrollar 🔹  Modificar datos de Paciente ❌
            
