@@ -53,7 +53,6 @@ def buscar_paciente (dni_buscado):
         cursor = db.cursor()
         cursor.execute ("SELECT * FROM pacientes WHERE DNI = '{dni}'".format(dni = dni_buscado))
         resultado = cursor.fetchall()
-
         if resultado:
             info = resultado [0]
             persona = {"id": info[0], 
@@ -76,7 +75,43 @@ def buscar_paciente (dni_buscado):
     except Exception as e:
         cursor.close()
         db.close()
-        return {"respuesta": False, "mensaje": str (e)}
+        return {"respuesta": False, "mensaje": str (e)} 
+#-----------------------------------------------------------------
+# MENÚ OPCIÓN 3: MODIFICAR DATOS
+#-----------------------------------------------------------------
+
+def actualizar_datos(paciente):
+    try:
+        # Asegurarse de que el diccionario contiene todos los campos necesarios
+        
+        nombre = paciente['nombre']
+        apellido = paciente['apellido']
+        dni = paciente['dni']
+        id = paciente['id']
+        genero = paciente['genero']
+        edad = paciente['edad']
+        fecha_nacimiento = paciente['fecha_nacimiento']
+        celular = paciente['celular']
+        mail = paciente['mail']
+        db = c.conectar()
+        cursor = db.cursor()
+
+        # Ejecutar la consulta de actualización, usando los valores recibidos
+        cursor.execute("""
+            UPDATE pacientes
+            SET nombre = %s, apellido = %s, dni = %s, genero = %s, edad = %s, 
+                fecha_nacimiento = %s, celular = %s, mail = %s
+            WHERE id = %s
+        """, (nombre, apellido, dni, genero, edad, fecha_nacimiento, celular, mail, id))
+
+        # Su función es confirmar los cambios
+        db.commit()
+
+        # Cierra conexión
+        cursor.close()
+        db.close()
+    except Exception as e:
+        print(f"⚠ Error al actualizar el paciente: {e}")
 
 
 #-----------------------------------------------------------------
@@ -101,4 +136,3 @@ def mostrar_pacientes ():
         cursor.close()
         db.close()
         return {"respuesta": False, "mensaje": str (e)}
-    
