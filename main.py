@@ -20,13 +20,13 @@ c.conectar()
 
 # --> pruebo carga datos <--
 persona = {
-    "dni": "26896332",
-    "nombre": "Pablo",
-    "edad": "abcd",
-    "apellido": "Torrez",
+    "dni": "26896333",
+    "nombre": "Luciano",
+    "apellido": "Pereyra",
     "genero":  "masculino",
-    "celular": "1562358970",
-    "mail": "algo6@gmail.com"
+    "fecha_nacimiento": "1980- 09- 21", 
+    "celular": "1562358971",
+    "mail": "luciano@gmail.com"
 }
 prueba = p.carga_datos(persona)
 print("prueba de carga de paciente")
@@ -55,8 +55,7 @@ while True:
         if opcion =="1":
            print ("nuevo paciente")
         elif opcion =="2":
-
-            print (p.buscar_paciente("26896332"))  # --> hacer que se ingrese el dni por teclado!!
+            print (p.buscar_paciente("26896333"))  # --> hacer que se ingrese el dni por teclado!!
         elif opcion =="3":
             print ("Modificar datos")
         elif opcion =="4":

@@ -61,7 +61,7 @@ def buscar_paciente (dni_buscado):
                        "apellido": info[2], 
                        "dni": info[3],
                        "género": info [4],
-                       "edad": info [5],
+                       "fecha_nacimiento": info [5],
                        "celular": info [6],
                        "mail": info [7]
                        }
