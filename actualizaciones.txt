@@ -6,8 +6,18 @@
                               -> en proceso opcion 2: buscar un paciente por DNI 💜
                                 
 🔹 se valida que solo se cargue 1 paciente por DNI, MAIL y CELU --> no pueden estar repetidos!
-🔹
-🔹
+
+________________________________________________________________________________________________
+-DEBORAH
+🔹 -> 26/11:
+> se añade código para crear 3 tablas:  🔸 pacientes
+                                        🔸 tratamientos
+                                        🔸 pacientes_tratamiento
+> verificar que los campos cumplan lo pedido por el profesor.  ❌
+> se añade campo género. (pacientes)
+> se modifica campo fecha: se almacena como TEXT, porque no hay otro tipo de dato en sqlite  (pacientes) ❌
+ año-mes-dia 
+
 
 -------------------------------------------------------------
 --> TO DO:

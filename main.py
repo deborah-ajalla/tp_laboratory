@@ -20,13 +20,13 @@ c.conectar()
 
 # --> pruebo carga datos <--
 persona = {
-    "dni": "26896332",
-    "nombre": "Pablo",
-    "edad": "abcd",
-    "apellido": "Torrez",
+    "dni": "26896333",
+    "nombre": "Luciano",
+    "apellido": "Pereyra",
     "genero":  "masculino",
-    "celular": "1562358970",
-    "mail": "algo6@gmail.com"
+    "fecha_nacimiento": "1980- 09- 21", 
+    "celular": "1562358971",
+    "mail": "luciano@gmail.com"
 }
 prueba = p.carga_datos(persona)
 print("prueba de carga de paciente")
