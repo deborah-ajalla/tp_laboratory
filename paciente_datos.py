@@ -59,7 +59,7 @@ def buscar_paciente (dni_buscado):
                        "nombre": info[1],
                        "apellido": info[2], 
                        "dni": info[3],
-                       "género": info [4],
+                       "genero": info [4],
                        "fecha_nacimiento": info [5],
                        "celular": info [6],
                        "mail": info [7]
@@ -84,25 +84,25 @@ def actualizar_datos(paciente):
     try:
         # Asegurarse de que el diccionario contiene todos los campos necesarios
         
+        id = paciente['id']
         nombre = paciente['nombre']
         apellido = paciente['apellido']
         dni = paciente['dni']
-        id = paciente['id']
         genero = paciente['genero']
-        edad = paciente['edad']
         fecha_nacimiento = paciente['fecha_nacimiento']
         celular = paciente['celular']
         mail = paciente['mail']
+
         db = c.conectar()
         cursor = db.cursor()
 
         # Ejecutar la consulta de actualización, usando los valores recibidos
         cursor.execute("""
             UPDATE pacientes
-            SET nombre = %s, apellido = %s, dni = %s, genero = %s, edad = %s, 
-                fecha_nacimiento = %s, celular = %s, mail = %s
-            WHERE id = %s
-        """, (nombre, apellido, dni, genero, edad, fecha_nacimiento, celular, mail, id))
+            SET nombre = ?, apellido = ?, dni = ?, genero = ?,
+                fecha_nacimiento = ?, celular = ?, mail = ?
+            WHERE id = ?
+        """, (nombre, apellido, dni, genero, fecha_nacimiento, celular, mail, id))
 
         # Su función es confirmar los cambios
         db.commit()

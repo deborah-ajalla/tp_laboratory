@@ -48,8 +48,7 @@ def mostrarDatos(paciente):
     print(f"\t Nombre: {paciente['nombre']}")
     print(f"\t Apellido: {paciente['apellido']}")
     print(f"\t DNI: {paciente['dni']}")
-    print(f"\t Género: {paciente['género']}")
-    print(f"\t Edad: {paciente['edad']}")
+    print(f"\t Género: {paciente['genero']}")
     print(f"\t Fecha de Nacimiento: {paciente['fecha_nacimiento']}")
     print(f"\t Celular: {paciente['celular']}")
     print(f"\t Email: {paciente['mail']}")
@@ -112,12 +111,8 @@ def modificar():
             print(f"\n✅ DNI actualizado a: {nuevo_valor}")
         elif dato_a_modificar == "género":
             nuevo_valor = input("Ingrese el nuevo género: ").strip()
-            paciente['género'] = nuevo_valor
+            paciente['genero'] = nuevo_valor
             print(f"\n✅ Género actualizado a: {nuevo_valor}")
-        elif dato_a_modificar == "edad":
-            nuevo_valor = input("Ingrese la nueva edad: ").strip()
-            paciente['edad'] = int(nuevo_valor)
-            print(f"\n✅ Edad actualizada a: {nuevo_valor}")
         elif dato_a_modificar == "fecha_nacimiento":
             nuevo_valor = input("Ingrese la nueva fecha de nacimiento (formato: YYYY-MM-DD): ").strip()
             paciente['fecha_nacimiento'] = nuevo_valor
