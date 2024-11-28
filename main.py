@@ -20,13 +20,16 @@ c.conectar()
 
 # --> pruebo carga datos <--
 persona = {
-    "dni": "26896300",
+
+    "dni": "26896334",
     "nombre": "Luciano",
     "apellido": "Pereyra",
     "genero":  "masculino",
     "fecha_nacimiento": "1980- 09- 21", 
-    "celular": "1562358900",
-    "mail": "luciano@gmail.com"
+    "celular": "1562358972",
+    "mail": "lucianoo@gmail.com",
+    "domicilio": "un lugar 123"
+
 }
 prueba = p.carga_datos(persona)
 print("prueba de carga de paciente")
@@ -37,9 +40,9 @@ print(prueba)
 # print("prueba de listado de paciente")
 # print(listado)
 
-buscar = p.buscar_paciente("26896338")
-print("prueba de buscar un paciente")
-print(buscar)
+# buscar = p.buscar_paciente("26896338")
+# print("prueba de buscar un paciente")
+# print(buscar)
 
 # --> FUNCIONES <--
 #Muestra los datos de paciente 
@@ -52,9 +55,10 @@ def mostrar_datos(paciente):
     print(f"\t Fecha de Nacimiento: {paciente['fecha_nacimiento']}")
     print(f"\t Celular: {paciente['celular']}")
     print(f"\t Email: {paciente['mail']}")
-
+    print(f"\t Domicilio: {paciente['domicilio']}")
 # --- Muestra el Resultado de la busqueda
 def resultado_busqueda():
+
     dni_buscado = input("\n🟢 Ingrese el DNI del paciente: ")
 
     resultado = p.buscar_paciente(dni_buscado)  
@@ -153,7 +157,7 @@ def modificar():
         print("\nVerifique que los datos actualizados sean correctos 👇")
         mostrar_datos(paciente)
         continuar_modificando = True
-
+        
         #Pregunta
         while True:
             continuar = input("\n🛑 ¿Desea continuar con la modificación de datos? (s/n): ").strip().lower()

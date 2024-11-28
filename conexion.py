@@ -18,7 +18,8 @@ def conectar ():
               GENERO TEXT NOT NULL,
               FECHA_NACIMIENTO TEXT NOT NULL,
               CELULAR TEXT NOT NULL UNIQUE,
-              MAIL TEXT NOT NULL UNIQUE
+              MAIL TEXT NOT NULL UNIQUE, 
+              DOMICILIO TEXT 
               );
 
                CREATE TABLE IF NOT EXISTS tratamientos

@@ -12,7 +12,7 @@ def carga_datos (paciente):
         valores = tuple(paciente.values())    # -> cargo registros
 
         sql = """
-              INSERT INTO pacientes {campos} VALUES (?,?,?,?,?,?,?)
+              INSERT INTO pacientes {campos} VALUES (?,?,?,?,?,?,?,?)
               """.format (campos = columnas)
         
         cursor.execute(sql, (valores))
@@ -62,7 +62,8 @@ def buscar_paciente (dni_buscado):
                        "genero": info [4],
                        "fecha_nacimiento": info [5],
                        "celular": info [6],
-                       "mail": info [7]
+                       "mail": info [7],
+                       "domicilio": info[8],
                        }
             cursor.close()
             db.close()
@@ -92,6 +93,7 @@ def actualizar_datos(paciente):
         fecha_nacimiento = paciente['fecha_nacimiento']
         celular = paciente['celular']
         mail = paciente['mail']
+        domicilio = paciente['domicilio']
 
         db = c.conectar()
         cursor = db.cursor()
@@ -100,9 +102,9 @@ def actualizar_datos(paciente):
         cursor.execute("""
             UPDATE pacientes
             SET nombre = ?, apellido = ?, dni = ?, genero = ?,
-                fecha_nacimiento = ?, celular = ?, mail = ?
+                fecha_nacimiento = ?, celular = ?, mail = ?, domicilio = ?
             WHERE id = ?
-        """, (nombre, apellido, dni, genero, fecha_nacimiento, celular, mail, id))
+        """, (nombre, apellido, dni, genero, fecha_nacimiento, celular, mail, domicilio, id))
 
         # Su función es confirmar los cambios
         db.commit()
