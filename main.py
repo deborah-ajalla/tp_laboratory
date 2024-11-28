@@ -18,41 +18,26 @@ print ("--------------------------------------------------------------")
 # --> pruebo creacion de BBDD <--
 c.conectar()
 
-# --> pruebo carga datos <--
-# persona = {
-#     "dni": "26896334",
-#     "nombre": "Luciano",
-#     "apellido": "Pereyra",
-#     "genero":  "masculino",
-#     "fecha_nacimiento": "1980- 09- 21", 
-#     "celular": "1562358972",
-#     "mail": "lucianoo@gmail.com",
-#     "domicilio": "un lugar 123"
-# }
-# prueba = p.carga_datos(persona)
-# print("prueba de carga de paciente")
-# print(prueba)
-
-
 # ----> FUNCIONES <----
 #-----------------------------------------------------------------
 # >>> CARGA NUEVO PACIENTE <<<
 #-----------------------------------------------------------------
 # -- Ingresa datos
 def nuevo_paciente ():
+    print("-------------------------------- ")
     print("Ingrese los datos del paciente: ")
-    nombre = input ("Nombre: ")
-    apellido = input ("Apellido: ")
-    dni = int (input ("DNI: "))
-    genero = input ("Género: ")
-    fecha_nacimiento = input ("Fecha de Nacimiento: ")
-    celular = input ("Celular: ")
-    mail = input ("Email: ")
-    domicilio = input ("Domicilio: ")
+    print("-------------------------------- ")
+    nombre = input ("\n> Nombre: ")
+    apellido = input ("> Apellido: ")
+    dni = int (input ("> DNI: "))
+    genero = input ("> Género: ")
+    fecha_nacimiento = input ("> Fecha de Nacimiento: ")
+    celular = input ("> Celular: ")
+    mail = input ("> Email: ")
+    domicilio = input ("> Domicilio: ")
 
 # -- Carga diccionario
     nuevo_p = {
-       
         "nombre": nombre,
         "apellido": apellido,
         "dni": dni,
@@ -65,7 +50,6 @@ def nuevo_paciente ():
 
     nuevo_paciente = p.carga_datos(nuevo_p)
     print (nuevo_paciente)
-
 
 #-----------------------------------------------------------------
 # >>> MUESTRA DATOS DE PACIENTE <<<
@@ -85,7 +69,9 @@ def mostrar_datos(paciente):
 # >>> MUESTRA RESULTADO DE BÚSQUEDA <<<
 #-----------------------------------------------------------------
 def resultado_busqueda():
-    dni_buscado = input("Ingrese el DNI del paciente: ")
+
+    dni_buscado = input("\n🟢 Ingrese el DNI del paciente: ")
+
     resultado = p.buscar_paciente(dni_buscado)  
 
     if resultado["respuesta"]: 
@@ -115,85 +101,103 @@ def modificar():
             paciente = resultado_busqueda()
             continue  # Repite la búsqueda
         elif seleccionado == "2":
-            print("Regresando al Menú Principal...")
+            print("\n🏠 Regresando al Menú Principal...")
             return  
         else:
-            print("❌ Opción no válida. Inténtelo de nuevo.")
+            print("\n❌ Opción no válida. Inténtelo de nuevo.")
             continue
 
         # Sale del bucle si encontró un paciente para continuar con la operación de modificar datos
-
     
-    #datos_originales = paciente.copy()
-    
-    dato_a_modificar = input("\n✍ Escriba el nombre del dato a modificar (ej: Email): ").strip().lower()
-        
+    dato_a_modificar = input("\n✍  Escriba el nombre del dato a modificar (ej: Email): ").strip().lower()
+    datos_modificados = False
     # Modificar valores según el dato introducido 
     while True:
         if dato_a_modificar == "nombre":
-            nuevo_valor = input("Ingrese el nuevo nombre: ").strip()
+            nuevo_valor = input("\n🟢 Ingrese el nuevo nombre: ").strip()
             paciente['nombre'] = nuevo_valor
+            datos_modificados = True
             print(f"\n✅ Nombre actualizado a: {nuevo_valor}")
         elif dato_a_modificar == "apellido":
-            nuevo_valor = input("Ingrese el nuevo apellido: ").strip()
+            nuevo_valor = input("\n🟢 Ingrese el nuevo apellido: ").strip()
             paciente['apellido'] = nuevo_valor
+            datos_modificados = True
             print(f"\n✅ Apellido actualizado a: {nuevo_valor}")
         elif dato_a_modificar == "dni":
-            nuevo_valor = input("Ingrese el nuevo DNI: ").strip()
+            nuevo_valor = input("\n🟢 Ingrese el nuevo DNI: ").strip()
             paciente['dni'] = nuevo_valor
+            datos_modificados = True
             print(f"\n✅ DNI actualizado a: {nuevo_valor}")
-        elif dato_a_modificar == "género":
-            nuevo_valor = input("Ingrese el nuevo género: ").strip()
+        elif dato_a_modificar == "género" or dato_a_modificar == "genero":
+            nuevo_valor = input("\n🟢 Ingrese el nuevo género: ").strip()
             paciente['genero'] = nuevo_valor
+            datos_modificados = True
             print(f"\n✅ Género actualizado a: {nuevo_valor}")
         elif dato_a_modificar == "fecha_nacimiento":
-            nuevo_valor = input("Ingrese la nueva fecha de nacimiento (formato: YYYY-MM-DD): ").strip()
+            nuevo_valor = input("\n🟢 Ingrese la nueva fecha de nacimiento (formato: YYYY-MM-DD): ").strip()
             paciente['fecha_nacimiento'] = nuevo_valor
+            datos_modificados = True
             print(f"\n✅ Fecha de nacimiento actualizada a: {nuevo_valor}")
         elif dato_a_modificar == "celular":
-            nuevo_valor = input("Ingrese el nuevo celular: ").strip()
+            nuevo_valor = input("\n🟢 Ingrese el nuevo celular: ").strip()
             paciente['celular'] = nuevo_valor
+            datos_modificados = True
             print(f"\n✅ Celular actualizado a: {nuevo_valor}")
         elif dato_a_modificar == "email":
-            nuevo_valor = input("Ingrese el nuevo email: ").strip()
+            nuevo_valor = input("\n🟢 Ingrese el nuevo email: ").strip()
             paciente['mail'] = nuevo_valor
+            datos_modificados = True
             print(f"\n✅ Email actualizado a: {nuevo_valor}")
         elif dato_a_modificar == "domicilio":
-            nuevo_valor = input("Ingrese el nuevo domicilio: ").strip()
+            nuevo_valor = input("\n🟢 Ingrese el nuevo domicilio: ").strip()
             paciente['domicilio'] = nuevo_valor
+            datos_modificados = True
             print(f"\n✅ Domicilio actualizado a: {nuevo_valor}")
-        elif dato_a_modificar == "salir":
-            print("Volviendo al menú principal...")
-            return
+        elif dato_a_modificar == "1" or dato_a_modificar == "2":
+            if dato_a_modificar == "2":
+                print("\n❌ Operación cancelada.")
+                print("\n🏠 Regresando al menú principal...")
+                return
+            elif not datos_modificados:
+                print("\n❌ No has realizado ninguna modificación.")
+                print("\n🏠 Regresando al menú principal...")
+                return
         else:
-            print("❌ Opción no válida. Inténtelo de nuevo o si desea salir ingrese 'salir'.")
-            dato_a_modificar = input("\n✍ Escriba el nombre del dato a modificar (ej: Email): ").strip().lower()
+            print("\n❌ Opción no válida. Inténtelo de nuevo.")
+            print("\n\t💡 TIP: Si desea cancelar escriba: \n\t - 1 para 'CANCELAR y GUARDAR' \n\t - 2 para 'CANCELAR y REGRESAR AL MENU PRINCIPAL' 👇")
+            dato_a_modificar = input("\n✍  Escriba el nombre del dato a modificar (ej: Email): ").strip().lower()
             continue
 
-
-        print("\nVerifique que los datos actualizados sean correctos.")
+        print("\nVerifique que los datos actualizados sean correctos 👇")
         mostrar_datos(paciente)
-        #Pregunta
-        continuar = input("¿Desea continuar  con la modificación de datos? (s/n): ").strip().lower()
+        continuar_modificando = True
         
-        if continuar == "s":
-            dato_a_modificar = input("\n✍ Escriba el nombre del dato a modificar (ej: Email): ").strip().lower()
+        #Pregunta
+        while True:
+            continuar = input("\n🛑 ¿Desea continuar con la modificación de datos? (s/n): ").strip().lower()
+            if continuar == "s":
+                dato_a_modificar = input("\n✍  Escriba el nombre del dato a modificar (ej: Email): ").strip().lower()
+                break
+            elif continuar == "n":
+                continuar_modificando = False
+                break
+            else:
+                print("\n❌ Opción no válida. Inténtelo de nuevo.")
+
+            #Confirmacion para guardar los datos modificados
+        confirmar = input("¿Desea guardar los cambios? (s/n): ").strip().lower()
+        if confirmar == "s":
+            p.actualizar_datos(paciente)
+            print("✅ Cambios guardados exitosamente en la base de datos.")
         else:
-            break #Sale del bucle para confirmar los cambios
+            print("❌ Cambios descartados.")
 
-        #Confirmacion para guardar los datos modificados
-    confirmar = input("¿Desea guardar los cambios? (s/n): ").strip().lower()
-    if confirmar == "s":
-        p.actualizar_datos(paciente)
-        print("✅ Cambios guardados exitosamente en la base de datos.")
-    else:
-        print("❌ Cambios descartados.")
 
-#-----------------------------------------------------------------
-# ----> MENU: <----
-#-----------------------------------------------------------------
+
+
+#----> MENU: <----
 while True:
-        print("*\n \t --- Sistema de Gestion de Pacientes de Centro de Estética ---")
+        print("\n  --- Sistema de Gestion de Pacientes de Centro de Estética ---")
         print("\t 1- Ingresar Nuevo Paciente")
         print("\t 2- Buscar Paciente")
         print("\t 3- Modificar datos")
@@ -212,7 +216,7 @@ while True:
         elif opcion =="4":
             print (p.mostrar_pacientes()) 
         elif opcion =="5":
-            print ("Eliminar datos de paciente")
+            p.eliminar_paciente()
         elif opcion =="6":
             print("Hasta la próxima!")
             break

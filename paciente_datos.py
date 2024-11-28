@@ -23,11 +23,11 @@ def carga_datos (paciente):
         if creado:
             cursor.close()
             db.close()
-            return {"respuesta": creado, "mensaje": "Paciente Registrado"} 
+            return ("Paciente Registrado  Exitosamente✅")   # verificar que indica bien!!! ❌❌
         else:
             cursor.close()
             db.close()
-            return {"respuesta": creado, "mensaje": "No se ha podido realizar la acción"}
+            return {"respuesta": False, "mensaje": "No se ha podido realizar la acción"}
         
     except Exception as e:
         if "UNIQUE" in  str (e) and "DNI" in str (e):                 # --> verifica que sólo haya un paciente por DNI
@@ -71,7 +71,7 @@ def buscar_paciente (dni_buscado):
         else:
             cursor.close()
             db.close()
-            return {"respuesta":False, "mensaje": "❌ No hay Paciente Registrado con ese DNI ❌"}
+            return {"respuesta":False, "mensaje": "\n❌ No hay Paciente Registrado con ese DNI ❌"}
         
     except Exception as e:
         cursor.close()
@@ -112,8 +112,9 @@ def actualizar_datos(paciente):
         # Cierra conexión
         cursor.close()
         db.close()
+        return {"respuesta": True, "mensaje": "\n✅ Cambios guardados exitosamente."}
     except Exception as e:
-        print(f"⚠ Error al actualizar el paciente: {e}")
+        return {"respuesta": False, "mensaje": f"⚠{e}"}
 
 
 #-----------------------------------------------------------------
@@ -133,8 +134,29 @@ def mostrar_pacientes ():
         else:
             cursor.close()
             db.close()
-            return {"respuesta": False ,"pacientes": pacientes,  "mensaje": "No hay Pacientes registrados aun... ❌"}
+            return {"respuesta": False ,"pacientes": pacientes,  "mensaje": "\nNo hay Pacientes registrados aun... ❌"}
     except Exception as e:
         cursor.close()
         db.close()
         return {"respuesta": False, "mensaje": str (e)}
+#-----------------------------------------------------------------
+# MENÚ OPCIÓN 5: ELIMINAR
+#-----------------------------------------------------------------
+def eliminar_paciente(id_paciente):
+    try:
+        db = c.conectar()
+        cursor = db.cursor()
+        
+        cursor.execute("DELETE FROM pacientes WHERE ID = ?", (id_paciente,))
+        
+        if cursor.rowcount > 0:
+            db.commit()
+            return {"respuesta": True, "mensaje": "\n✅ Paciente eliminado"}
+        else:
+            return {"respuesta": False, "mensaje": "\nNo se encontró un paciente con ese ID ❌"}
+    except Exception as e:
+        return {"respuesta": False, "mensaje": str(e)}
+    finally:
+        cursor.close()
+        db.close()
+
