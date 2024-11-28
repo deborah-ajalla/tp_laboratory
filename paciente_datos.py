@@ -71,7 +71,7 @@ def buscar_paciente (dni_buscado):
         else:
             cursor.close()
             db.close()
-            return {"respuesta":False, "mensaje": "❌ No hay Paciente Registrado con ese DNI ❌"}
+            return {"respuesta":False, "mensaje": "\n❌ No hay Paciente Registrado con ese DNI ❌"}
         
     except Exception as e:
         cursor.close()
@@ -112,8 +112,9 @@ def actualizar_datos(paciente):
         # Cierra conexión
         cursor.close()
         db.close()
+        return {"respuesta": True, "mensaje": "\n✅ Cambios guardados exitosamente."}
     except Exception as e:
-        print(f"⚠ Error al actualizar el paciente: {e}")
+        return {"respuesta": False, "mensaje": f"⚠{e}"}
 
 
 #-----------------------------------------------------------------
@@ -133,7 +134,7 @@ def mostrar_pacientes ():
         else:
             cursor.close()
             db.close()
-            return {"respuesta": False ,"pacientes": pacientes,  "mensaje": "No hay Pacientes registrados aun... ❌"}
+            return {"respuesta": False ,"pacientes": pacientes,  "mensaje": "\nNo hay Pacientes registrados aun... ❌"}
     except Exception as e:
         cursor.close()
         db.close()
