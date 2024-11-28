@@ -139,3 +139,24 @@ def mostrar_pacientes ():
         cursor.close()
         db.close()
         return {"respuesta": False, "mensaje": str (e)}
+#-----------------------------------------------------------------
+# MENÚ OPCIÓN 5: ELIMINAR
+#-----------------------------------------------------------------
+def eliminar_paciente(id_paciente):
+    try:
+        db = c.conectar()
+        cursor = db.cursor()
+        
+        cursor.execute("DELETE FROM pacientes WHERE ID = ?", (id_paciente,))
+        
+        if cursor.rowcount > 0:
+            db.commit()
+            return {"respuesta": True, "mensaje": "\n✅ Paciente eliminado"}
+        else:
+            return {"respuesta": False, "mensaje": "\nNo se encontró un paciente con ese ID ❌"}
+    except Exception as e:
+        return {"respuesta": False, "mensaje": str(e)}
+    finally:
+        cursor.close()
+        db.close()
+
