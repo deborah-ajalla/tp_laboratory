@@ -193,32 +193,32 @@ def modificar():
             print("❌ Cambios descartados.")
 
 
-
-
-#----> MENU: <----
+#-----------------------------------------------------------------
+# >>> MENU: <<<
+#-----------------------------------------------------------------
 while True:
-        print("\n  --- Sistema de Gestion de Pacientes de Centro de Estética ---")
-        print("\t 1- Ingresar Nuevo Paciente")
-        print("\t 2- Buscar Paciente")
-        print("\t 3- Modificar datos")
-        print("\t 4- Mostrar Listado Total")  
-        print("\t 5- Eliminar datos de Paciente")
-        print("\t 6- Salir")
+        print("\n  >>>>>  Sistema de Gestion de Pacientes de Centro de Estética  <<<<<\n")
+        print("\t\t 1- Ingresar Nuevo Paciente")
+        print("\t\t 2- Buscar Paciente")
+        print("\t\t 3- Modificar datos")
+        print("\t\t 4- Mostrar Listado Total")  
+        print("\t\t 5- Eliminar datos de Paciente")
+        print("\t\t 6- Salir")
 
-        opcion = input("Seleccione una opcion: ")
+        opcion = input("--> Seleccione una opcion: ")
         if opcion =="1":
             nuevo_paciente()
         elif opcion =="2":
-            print ("\n--- Buscador 🔎---")
+            print ("\n--- Buscador 🔎 ---")
             resultado_busqueda() 
         elif opcion =="3":
             modificar()
         elif opcion =="4":
             print (p.mostrar_pacientes()) 
         elif opcion =="5":
-            p.eliminar_paciente()
+            eliminar_paciente()
         elif opcion =="6":
-            print("Hasta la próxima!")
+            print("⏩ Hasta la próxima!!!⏪")
             break
         else :
             print("Opción Inválida")

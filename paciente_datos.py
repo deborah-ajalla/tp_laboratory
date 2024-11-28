@@ -23,11 +23,11 @@ def carga_datos (paciente):
         if creado:
             cursor.close()
             db.close()
-            return ("Paciente Registrado  Exitosamente✅")   # verificar que indica bien!!! ❌❌
+            return ("\n 🔸 Paciente Registrado  Exitosamente 🔸 ✅")  
         else:
             cursor.close()
             db.close()
-            return {"respuesta": False, "mensaje": "No se ha podido realizar la acción"}
+            return ("\n ❌❌ No se ha podido realizar la carga de datos. Aguarde e Intente Nuevamente... ❌❌")
         
     except Exception as e:
         if "UNIQUE" in  str (e) and "DNI" in str (e):                 # --> verifica que sólo haya un paciente por DNI
