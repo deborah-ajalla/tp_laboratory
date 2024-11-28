@@ -87,6 +87,7 @@ def resultado_busqueda():
 #-----------------------------------------------------------------
 # >>>  MODIFICA DATOS <<<
 #-----------------------------------------------------------------
+# --- Modifica los datos
 def modificar():
     print("\n--- Modificación de Datos 📝 ---")
     paciente = resultado_busqueda()
@@ -164,14 +165,14 @@ def modificar():
                 return
         else:
             print("\n❌ Opción no válida. Inténtelo de nuevo.")
-            print("\n\t💡 TIP: Si desea cancelar escriba: \n\t - 1 para 'CANCELAR y GUARDAR' \n\t - 2 para 'CANCELAR y REGRESAR AL MENU PRINCIPAL' 👇")
+            print("\n\t💡 TIP: Si desea cancelar escriba: \n\t - 1 para 'CANCELAR y GUARDAR' \n\t - 2 para CANCELAR y REGRESAR AL MENU PRINCIPAL 👇")
             dato_a_modificar = input("\n✍  Escriba el nombre del dato a modificar (ej: Email): ").strip().lower()
             continue
 
         print("\nVerifique que los datos actualizados sean correctos 👇")
         mostrar_datos(paciente)
         continuar_modificando = True
-        
+
         #Pregunta
         while True:
             continuar = input("\n🛑 ¿Desea continuar con la modificación de datos? (s/n): ").strip().lower()
@@ -184,14 +185,26 @@ def modificar():
             else:
                 print("\n❌ Opción no válida. Inténtelo de nuevo.")
 
-            #Confirmacion para guardar los datos modificados
-        confirmar = input("¿Desea guardar los cambios? (s/n): ").strip().lower()
-        if confirmar == "s":
-            p.actualizar_datos(paciente)
-            print("✅ Cambios guardados exitosamente en la base de datos.")
-        else:
-            print("❌ Cambios descartados.")
+        #Confirmacion para guardar los datos modificados
+        if not continuar_modificando:
 
+            while True: #Únicamente acepta s o n como opciones válidas
+                confirmar = input("\n🛑 ¿Desea guardar los cambios? (s/n): ").strip().lower()
+                if confirmar == "s":
+                    resultado = p.actualizar_datos(paciente)
+                    if resultado["respuesta"]:
+                        print(resultado['mensaje'])
+                        print("\n🏠 Regresando al menú principal...")
+                        return
+                    else:
+                        print(f"\n❌ No se pudo guardar los cambios: {resultado['mensaje']}")
+                    break 
+                elif confirmar == "n":
+                    print("\n❌ Cambios descartados.")
+                    print("\n🏠 Regresando al menú principal...")
+                    return
+                else:
+                    print("\n❌ Opción no válida. Ingrese S para GUARDAR o N para DESCARTAR.")
 
 #-----------------------------------------------------------------
 # >>> MENU: <<<
