@@ -134,7 +134,7 @@ def modificar():
             paciente['genero'] = nuevo_valor
             datos_modificados = True
             print(f"\n✅ Género actualizado a: {nuevo_valor}")
-        elif dato_a_modificar == "fecha_nacimiento":
+        elif dato_a_modificar == "fecha de nacimiento":
             nuevo_valor = input("\n🟢 Ingrese la nueva fecha de nacimiento (formato: YYYY-MM-DD): ").strip()
             paciente['fecha_nacimiento'] = nuevo_valor
             datos_modificados = True
@@ -165,7 +165,7 @@ def modificar():
                 return
         else:
             print("\n❌ Opción no válida. Inténtelo de nuevo.")
-            print("\n\t💡 TIP: Si desea cancelar escriba: \n\t - 1 para 'CANCELAR y GUARDAR' \n\t - 2 para CANCELAR y REGRESAR AL MENU PRINCIPAL 👇")
+            print("\n\t💡 TIP: Si desea cancelar escriba: \n\t - 1 para CANCELAR y GUARDAR \n\t - 2 para CANCELAR y REGRESAR AL MENU PRINCIPAL 👇")
             dato_a_modificar = input("\n✍  Escriba el nombre del dato a modificar (ej: Email): ").strip().lower()
             continue
 
@@ -205,6 +205,51 @@ def modificar():
                     return
                 else:
                     print("\n❌ Opción no válida. Ingrese S para GUARDAR o N para DESCARTAR.")
+#--------------------------- FIN FUNCION MODIFICAR --------------------------------------
+
+# --- Eliminar Paciente
+def eliminar():
+    print("\n--- Eliminar Paciente 🗑 ---")
+    paciente = resultado_busqueda()
+
+    while not paciente:  # En caso de no encontrar coindidencias busca un paciente hasta que el usuario decida salir
+        print("¿Qué desea hacer?")
+        print("\t 1- Buscar otro paciente")
+        print("\t 2- Regresar al Menú Principal")
+        seleccionado = input("\nSeleccione una opción: ").strip()
+            
+        if seleccionado == "1":
+            paciente = resultado_busqueda()
+            continue  # Repite la búsqueda
+        elif seleccionado == "2":
+            print("\n🏠 Regresando al Menú Principal...")
+            return  
+        else:
+            print("\n❌ Opción no válida. Inténtelo de nuevo.")
+            continue
+
+        # Sale del bucle si encontró un paciente para continuar con la operación de Eliminar
+
+    while True:
+        print(f"\n🛑 ¿Desea eliminar a {paciente['apellido']} {paciente['nombre']}? (s/n): ")
+        print("\n⚠ IMPORTANTE: Una vez eliminado, no se podrá recuperar.")
+        opcionSelec = input("\n🟡 Ingrese S para 'ELIMINAR' O N para 'CANCELAR': ").strip().lower()
+        if opcionSelec == 's':
+            respuesta = p.eliminar_paciente(paciente['id'])
+            if respuesta['respuesta']:
+                print(respuesta['mensaje'])
+                print("\n🏠 Regresando al Menú Principal...")
+            else:
+                print(respuesta['mensaje'])
+                print("\n🏠 Regresando al Menú Principal...")
+            return
+        elif opcionSelec == 'n':
+            print("\n🚫 Operación cancelada.")
+            print("\n🏠 Regresando al Menú Principal...")
+            return
+        else:
+            print("\n❌ Opción no válida. Inténtelo de nuevo ❌")
+#------------------------ FIN FUNCION ELIMINAR-----------------------------------------
 
 #-----------------------------------------------------------------
 # >>> MENU: <<<
@@ -229,7 +274,7 @@ while True:
         elif opcion =="4":
             print (p.mostrar_pacientes()) 
         elif opcion =="5":
-            p.eliminar_paciente()
+            eliminar()
         elif opcion =="6":
             print("⏩ Hasta la próxima!!!⏪")
             break
