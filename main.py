@@ -19,31 +19,57 @@ print ("--------------------------------------------------------------")
 c.conectar()
 
 # --> pruebo carga datos <--
-persona = {
-    "dni": "26896334",
-    "nombre": "Luciano",
-    "apellido": "Pereyra",
-    "genero":  "masculino",
-    "fecha_nacimiento": "1980- 09- 21", 
-    "celular": "1562358972",
-    "mail": "lucianoo@gmail.com",
-    "domicilio": "un lugar 123"
-}
-prueba = p.carga_datos(persona)
-print("prueba de carga de paciente")
-print(prueba)
+# persona = {
+#     "dni": "26896334",
+#     "nombre": "Luciano",
+#     "apellido": "Pereyra",
+#     "genero":  "masculino",
+#     "fecha_nacimiento": "1980- 09- 21", 
+#     "celular": "1562358972",
+#     "mail": "lucianoo@gmail.com",
+#     "domicilio": "un lugar 123"
+# }
+# prueba = p.carga_datos(persona)
+# print("prueba de carga de paciente")
+# print(prueba)
 
-# --> pruebo listar <--
-# listado = p.mostrar_pacientes()
-# print("prueba de listado de paciente")
-# print(listado)
 
-# buscar = p.buscar_paciente("26896338")
-# print("prueba de buscar un paciente")
-# print(buscar)
+# ----> FUNCIONES <----
+#-----------------------------------------------------------------
+# >>> CARGA NUEVO PACIENTE <<<
+#-----------------------------------------------------------------
+# -- Ingresa datos
+def nuevo_paciente ():
+    print("Ingrese los datos del paciente: ")
+    nombre = input ("Nombre: ")
+    apellido = input ("Apellido: ")
+    dni = int (input ("DNI: "))
+    genero = input ("Género: ")
+    fecha_nacimiento = input ("Fecha de Nacimiento: ")
+    celular = input ("Celular: ")
+    mail = input ("Email: ")
+    domicilio = input ("Domicilio: ")
 
-# --> FUNCIONES <--
-#Muestra los datos de paciente 
+# -- Carga diccionario
+    nuevo_p = {
+       
+        "nombre": nombre,
+        "apellido": apellido,
+        "dni": dni,
+        "genero": genero,
+        "fecha_nacimiento": fecha_nacimiento,
+        "celular": celular,
+        "mail": mail,
+        "domicilio": domicilio
+    }
+
+    nuevo_paciente = p.carga_datos(nuevo_p)
+    print (nuevo_paciente)
+
+
+#-----------------------------------------------------------------
+# >>> MUESTRA DATOS DE PACIENTE <<<
+#-----------------------------------------------------------------
 def mostrar_datos(paciente):
     print(f"\t ID: {paciente['id']}")
     print(f"\t Nombre: {paciente['nombre']}")
@@ -54,7 +80,10 @@ def mostrar_datos(paciente):
     print(f"\t Celular: {paciente['celular']}")
     print(f"\t Email: {paciente['mail']}")
     print(f"\t Domicilio: {paciente['domicilio']}")
-# --- Muestra el Resultado de la busqueda
+
+#-----------------------------------------------------------------
+# >>> MUESTRA RESULTADO DE BÚSQUEDA <<<
+#-----------------------------------------------------------------
 def resultado_busqueda():
     dni_buscado = input("Ingrese el DNI del paciente: ")
     resultado = p.buscar_paciente(dni_buscado)  
@@ -68,7 +97,10 @@ def resultado_busqueda():
         print("\n--- Resultado de la Búsqueda 👇")
         print(resultado["mensaje"])
         return None  # Retorna None si no se encuentra el paciente
-# --- Modifica los datos
+    
+#-----------------------------------------------------------------
+# >>>  MODIFICA DATOS <<<
+#-----------------------------------------------------------------
 def modificar():
     print("\n--- Modificación de Datos 📝 ---")
     paciente = resultado_busqueda()
@@ -157,10 +189,9 @@ def modificar():
     else:
         print("❌ Cambios descartados.")
 
-
-
-
-#----> MENU: <----
+#-----------------------------------------------------------------
+# ----> MENU: <----
+#-----------------------------------------------------------------
 while True:
         print("*\n \t --- Sistema de Gestion de Pacientes de Centro de Estética ---")
         print("\t 1- Ingresar Nuevo Paciente")
@@ -172,10 +203,10 @@ while True:
 
         opcion = input("Seleccione una opcion: ")
         if opcion =="1":
-            print ("nuevo paciente")
+            nuevo_paciente()
         elif opcion =="2":
             print ("\n--- Buscador 🔎---")
-            resultado_busqueda() # --> hacer que se ingrese el dni por teclado!!
+            resultado_busqueda() 
         elif opcion =="3":
             modificar()
         elif opcion =="4":

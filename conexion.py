@@ -3,7 +3,7 @@ import sqlite3
 
 # ----> CONEXION <----
 def conectar ():
-    mi_conexion = sqlite3.connect ("tp.bd")    # -> almaceno en variable la conexion que crea la BBDD
+    mi_conexion = sqlite3.connect ("tp.db")    # -> almaceno en variable la conexion que crea la BBDD
     cursor = mi_conexion.cursor()
 
 # ----> CREA TABLA <----
