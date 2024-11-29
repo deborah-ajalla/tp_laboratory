@@ -130,17 +130,29 @@ def mostrar_pacientes ():
         pacientes = cursor.fetchall()
 
         if pacientes:
-            cursor.close()
-            db.close()
-            return {"respuesta": True, "pacientes": pacientes, "mensaje": "Listado todo OK ✔"}
+            columnas = [descripcion[0] for descripcion in cursor.description]     #-->  Recuperar los nombres de las columnas
+
+            print ("-----------------------------------")
+            print(f"--> Listado de Pacientes: <--") 
+            print ("-----------------------------------")
+            
+            for paciente in pacientes: # Mostrar los registros con los nombres de las columnas
+                 fila = dict(zip(columnas, paciente))  # Combinar nombre de columnas con los datos correspondientes de la fila
+
+                 for clave, valor in fila.items():
+                    print(f"{clave}: {valor}")
+                 print ("--------------------------------------")
         else:
-            cursor.close()
-            db.close()
-            return {"respuesta": False ,"pacientes": pacientes,  "mensaje": "\nNo hay Pacientes registrados aun... ❌"}
+         
+            print (" >> No hay Pacientes registrados aun... ❌")
     except Exception as e:
+        # cursor.close()
+        # db.close()
+        return {"respuesta": False, "mensaje": str (e)}
+    finally:
         cursor.close()
         db.close()
-        return {"respuesta": False, "mensaje": str (e)}
+    
 #-----------------------------------------------------------------
 # MENÚ OPCIÓN 5: ELIMINAR
 #-----------------------------------------------------------------
