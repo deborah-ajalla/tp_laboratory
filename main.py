@@ -32,8 +32,8 @@ def nuevo_paciente ():
     nombre = v.validar_entrada(input("\n🟢 Ingrese Nombre: "), "^[a-zA-ZáéíóúÁÉÍÓÚ ]+$", "\n🟠 Ingrese un nombre válido (solo letras y espacios): ")
     apellido = v.validar_entrada(input("\n🟢 Ingrese Apellido: "), "^[a-zA-ZáéíóúÁÉÍÓÚ ]+$", "\n🟠 Ingrese un apellido válido (solo letras y espacios): ")
     dni = v.validar_entrada(input("\n🟢 Ingrese DNI: "), "^[0-9]{7,8}$", "\n🟠 Ingrese un DNI válido (solo números, 7 u 8 dígitos): ")
-    genero = v.validar_entrada(input("> Género: "), "^[MF]$", "\n🟠 Ingrese un género válido (M/F): ").upper()
-    fecha_nacimiento = v.validar_entrada(input("\n🟢 Ingrese  Fecha de Nacimiento (DD/MM/AAAA): "), "^\d{2}/\d{2}/\d{4}$", "\n🟠 Ingrese una fecha válida (DD/MM/AAAA): ")
+    genero = v.validar_entrada(input("\n🟢  Género: "), "^[MF]$", "\n🟠 Ingrese un género válido (M/F): ").upper()
+    fecha_nacimiento = v.validar_entrada(input("\n🟢 Ingrese Fecha de Nacimiento (YYYY-MM-DD): "), "^\d{4}-\d{2}-\d{2}$", "\n🟠 Ingrese una fecha válida (YYYY-MM-DD): ")
     celular = v.validar_entrada(input("\n🟢 Ingrese Celular: "), "^[0-9]{10}$", "\n🟠 Ingrese un celular válido (solo números de 10 dígitos): ")
     mail = v.validar_entrada(input("\n🟢 Ingrese Email: "), "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", "\n🟠 Ingrese un correo electrónico válido: ")
     domicilio = v.validar_entrada(input("\n🟢 Ingrese Domicilio: "), "^[a-zA-Z0-9\s]+$", "\n🟠 Ingrese un domicilio válido (letras, números y espacios): ")
@@ -143,7 +143,6 @@ def modificar():
             print(f"\n✅ Género actualizado a: {nuevo_valor}")
         elif dato_a_modificar == "fecha de nacimiento":
             nuevo_valor = input("\n🟢 Ingrese la nueva fecha de nacimiento (formato: YYYY-MM-DD): ").strip()
-            # Puedes agregar una validación más específica aquí para la fecha si lo deseas
             nuevo_valor = v.validar_entrada(nuevo_valor, "^\d{4}-\d{2}-\d{2}$", "\n🟠 Ingrese una fecha válida (formato: YYYY-MM-DD): ")
             paciente['fecha_nacimiento'] = nuevo_valor
             datos_modificados = True
