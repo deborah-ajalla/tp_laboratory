@@ -21,13 +21,13 @@ def carga_datos (paciente):
         db.commit()
         
         if creado:
-            cursor.close()
-            db.close()
-            return ("\n 🔸 Paciente Registrado  Exitosamente 🔸 ✅")  
+            # cursor.close()
+            # db.close()
+            print ("\n 🔸 Paciente Registrado  Exitosamente 🔸 ✅")  
         else:
-            cursor.close()
-            db.close()
-            return ("\n ❌❌ No se ha podido realizar la carga de datos. Aguarde e Intente Nuevamente... ❌❌")
+            # cursor.close()
+            # db.close()
+            print ("\n ❌❌ No se ha podido realizar la carga de datos. Aguarde e Intente Nuevamente... ❌❌")
         
     except Exception as e:
         if "UNIQUE" in  str (e) and "DNI" in str (e):                 # --> verifica que sólo haya un paciente por DNI
@@ -38,11 +38,13 @@ def carga_datos (paciente):
             mensaje = "Ya existe un paciente que registró ese Celular de Contacto, por favor indique otro..."
         else:
             mensaje = str(e) 
-            cursor.close()
-            db.close()
+            # cursor.close()
+            # db.close()
              
-        return {"respuesta": False,
+            return {"respuesta": False,
                 "mensaje": mensaje}
+    finally:
+        db.close()
     
 #-----------------------------------------------------------------
 # MENÚ OPCIÓN 2: BUSCAR PACIENTE (POR DNI)

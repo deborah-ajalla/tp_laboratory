@@ -41,7 +41,7 @@ def conectar ():
               )
               """
         cursor.executescript(sql)       # para ejecutar multiples instrucciones... sino sería execute. ❌
-        cursor.close()
+        # cursor.close()
         return mi_conexion
     
     except Exception as e:
