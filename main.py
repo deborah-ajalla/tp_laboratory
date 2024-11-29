@@ -125,7 +125,7 @@ def resultado_busqueda():
 #-----------------------------------------------------------------
 # >>>  MODIFICA DATOS <<<
 #-----------------------------------------------------------------
-# --- Modifica los datos
+
 def modificar():
     print("\n--- Modificación de Datos 📝 ---")
     paciente = resultado_busqueda()
@@ -255,7 +255,9 @@ def modificar():
                     print("\n❌ Opción no válida. Ingrese S para GUARDAR o N para DESCARTAR.")
 #--------------------------- FIN FUNCION MODIFICAR --------------------------------------
 
-# --- Eliminar Paciente
+#-----------------------------------------------------------------
+# >>>  ELIMINAR PACIENTE <<<
+#-----------------------------------------------------------------
 def eliminar():
     print("\n--- Eliminar Paciente 🗑 ---")
     paciente = resultado_busqueda()
@@ -298,28 +300,10 @@ def eliminar():
         else:
             print("\n❌ Opción no válida. Inténtelo de nuevo ❌")
 #------------------------ FIN FUNCION ELIMINAR-----------------------------------------
-
 #-----------------------------------------------------------------
-# >>> MENU: <<<
+# >>>  MOSTRAR TABLA <<<
 #-----------------------------------------------------------------
-while True:
-        print("\n  >>>>>  Sistema de Gestion de Pacientes de Centro de Estética  <<<<<\n")
-        print("\t\t 1- Ingresar Nuevo Paciente")
-        print("\t\t 2- Buscar Paciente")
-        print("\t\t 3- Modificar datos")
-        print("\t\t 4- Mostrar Listado Total")  
-        print("\t\t 5- Eliminar datos de Paciente")
-        print("\t\t 6- Salir")
-
-        opcion = input("--> Seleccione una opcion: ")
-        if opcion =="1":
-            nuevo_paciente()
-        elif opcion =="2":
-            print ("\n--- Buscador 🔎 ---")
-            resultado_busqueda() 
-        elif opcion =="3":
-            modificar()
-        elif opcion =="4":
+def mostrar_tabla():
             respuesta = p.mostrar_pacientes()
             if respuesta['respuesta']:
             #Tabla para mostrar los datos de los pacientes
@@ -335,7 +319,31 @@ while True:
                 print("-" * 110)
                 print(respuesta['mensaje'])
             else:
-                print(respuesta['mensaje'])
+                print(respuesta['mensaje'])       
+#------------------------ FIN FUNCION MOSTRAR TABLA -----------------------------------------
+
+#-----------------------------------------------------------------
+# >>> MENU: <<<
+#-----------------------------------------------------------------
+while True:
+        print("\n  >>>>>  Sistema de Gestion de Pacientes de Centro de Estética  <<<<<\n")
+        print("\t\t 1- Ingresar Nuevo Paciente")
+        print("\t\t 2- Buscar Paciente")
+        print("\t\t 3- Modificar datos")
+        print("\t\t 4- Mostrar Listado Total")  
+        print("\t\t 5- Eliminar Paciente")
+        print("\t\t 6- Salir")
+
+        opcion = input("--> Seleccione una opcion: ")
+        if opcion =="1":
+            nuevo_paciente()
+        elif opcion =="2":
+            print ("\n--- Buscador 🔎 ---")
+            resultado_busqueda() 
+        elif opcion =="3":
+            modificar()
+        elif opcion =="4":
+            mostrar_tabla()
         elif opcion =="5":
             eliminar()
         elif opcion =="6":
