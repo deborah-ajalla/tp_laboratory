@@ -1,5 +1,6 @@
 import conexion as c
 import paciente_datos as p
+import validar_datos as v
 #-----------------------------------------------------------------
 """
  -> PROYECTO: App que gestiona la actividad de COSMETÓLOGA.
@@ -27,14 +28,16 @@ def nuevo_paciente ():
     print("-------------------------------- ")
     print("Ingrese los datos del paciente: ")
     print("-------------------------------- ")
-    nombre = input ("\n> Nombre: ")
-    apellido = input ("> Apellido: ")
-    dni = int (input ("> DNI: "))
-    genero = input ("> Género: ")
-    fecha_nacimiento = input ("> Fecha de Nacimiento: ")
-    celular = input ("> Celular: ")
-    mail = input ("> Email: ")
-    domicilio = input ("> Domicilio: ")
+    # Validación de datos
+    nombre = v.validar_entrada(input("\n🟢 Ingrese Nombre: "), "^[a-zA-ZáéíóúÁÉÍÓÚ ]+$", "\n🟠 Ingrese un nombre válido (solo letras y espacios): ")
+    apellido = v.validar_entrada(input("\n🟢 Ingrese Apellido: "), "^[a-zA-ZáéíóúÁÉÍÓÚ ]+$", "\n🟠 Ingrese un apellido válido (solo letras y espacios): ")
+    dni = v.validar_entrada(input("\n🟢 Ingrese DNI: "), "^[0-9]{7,8}$", "\n🟠 Ingrese un DNI válido (solo números, 7 u 8 dígitos): ")
+    genero = v.validar_entrada(input("> Género: "), "^[MF]$", "\n🟠 Ingrese un género válido (M/F): ").upper()
+    fecha_nacimiento = v.validar_entrada(input("\n🟢 Ingrese  Fecha de Nacimiento (DD/MM/AAAA): "), "^\d{2}/\d{2}/\d{4}$", "\n🟠 Ingrese una fecha válida (DD/MM/AAAA): ")
+    celular = v.validar_entrada(input("\n🟢 Ingrese Celular: "), "^[0-9]{10}$", "\n🟠 Ingrese un celular válido (solo números de 10 dígitos): ")
+    mail = v.validar_entrada(input("\n🟢 Ingrese Email: "), "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", "\n🟠 Ingrese un correo electrónico válido: ")
+    domicilio = v.validar_entrada(input("\n🟢 Ingrese Domicilio: "), "^[a-zA-Z0-9\s]+$", "\n🟠 Ingrese un domicilio válido (letras, números y espacios): ")
+
 
 # -- Carga diccionario
     nuevo_p = {
@@ -116,41 +119,50 @@ def modificar():
     while True:
         if dato_a_modificar == "nombre":
             nuevo_valor = input("\n🟢 Ingrese el nuevo nombre: ").strip()
+            nuevo_valor = v.validar_entrada(nuevo_valor, "^[a-zA-ZáéíóúÁÉÍÓÚ ]+$", "\n🟠 Ingrese un nombre válido (solo letras y espacios): ")
             paciente['nombre'] = nuevo_valor
             datos_modificados = True
             print(f"\n✅ Nombre actualizado a: {nuevo_valor}")
         elif dato_a_modificar == "apellido":
             nuevo_valor = input("\n🟢 Ingrese el nuevo apellido: ").strip()
+            nuevo_valor = v.validar_entrada(nuevo_valor, "^[a-zA-ZáéíóúÁÉÍÓÚ ]+$", "\n🟠 Ingrese un apellido válido (solo letras y espacios): ")
             paciente['apellido'] = nuevo_valor
             datos_modificados = True
             print(f"\n✅ Apellido actualizado a: {nuevo_valor}")
         elif dato_a_modificar == "dni":
             nuevo_valor = input("\n🟢 Ingrese el nuevo DNI: ").strip()
+            nuevo_valor = v.validar_entrada(nuevo_valor, "^[0-9]{7,8}$", "\n🟠 Ingrese un DNI válido (solo números, 7 u 8 dígitos): ")
             paciente['dni'] = nuevo_valor
             datos_modificados = True
             print(f"\n✅ DNI actualizado a: {nuevo_valor}")
-        elif dato_a_modificar == "género" or dato_a_modificar == "genero":
-            nuevo_valor = input("\n🟢 Ingrese el nuevo género: ").strip()
+        elif dato_a_modificar == "genero" or dato_a_modificar == "género":
+            nuevo_valor = input("\n🟢 Ingrese el nuevo género (M/F): ").strip()
+            nuevo_valor = v.validar_entrada(nuevo_valor, "^[MF]$", "\n🟠 Ingrese un género válido (M/F): ")
             paciente['genero'] = nuevo_valor
             datos_modificados = True
             print(f"\n✅ Género actualizado a: {nuevo_valor}")
         elif dato_a_modificar == "fecha de nacimiento":
             nuevo_valor = input("\n🟢 Ingrese la nueva fecha de nacimiento (formato: YYYY-MM-DD): ").strip()
+            # Puedes agregar una validación más específica aquí para la fecha si lo deseas
+            nuevo_valor = v.validar_entrada(nuevo_valor, "^\d{4}-\d{2}-\d{2}$", "\n🟠 Ingrese una fecha válida (formato: YYYY-MM-DD): ")
             paciente['fecha_nacimiento'] = nuevo_valor
             datos_modificados = True
             print(f"\n✅ Fecha de nacimiento actualizada a: {nuevo_valor}")
         elif dato_a_modificar == "celular":
             nuevo_valor = input("\n🟢 Ingrese el nuevo celular: ").strip()
+            nuevo_valor = v.validar_entrada(nuevo_valor, "^[0-9]{10}$", "\n🟠 Ingrese un celular válido (solo números de 10 dígitos): ")
             paciente['celular'] = nuevo_valor
             datos_modificados = True
             print(f"\n✅ Celular actualizado a: {nuevo_valor}")
         elif dato_a_modificar == "email":
             nuevo_valor = input("\n🟢 Ingrese el nuevo email: ").strip()
+            nuevo_valor = v.validar_entrada(nuevo_valor, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", "\n🟠 Ingrese un correo electrónico válido: ")
             paciente['mail'] = nuevo_valor
             datos_modificados = True
             print(f"\n✅ Email actualizado a: {nuevo_valor}")
         elif dato_a_modificar == "domicilio":
             nuevo_valor = input("\n🟢 Ingrese el nuevo domicilio: ").strip()
+            nuevo_valor = v.validar_entrada(nuevo_valor, "^[a-zA-Z0-9\s]+$", "\n🟠 Ingrese un domicilio válido (letras, números y espacios): ")
             paciente['domicilio'] = nuevo_valor
             datos_modificados = True
             print(f"\n✅ Domicilio actualizado a: {nuevo_valor}")
