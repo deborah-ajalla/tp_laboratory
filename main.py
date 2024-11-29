@@ -272,7 +272,7 @@ while True:
         elif opcion =="3":
             modificar()
         elif opcion =="4":
-            print (p.mostrar_pacientes()) 
+            p.mostrar_pacientes()
         elif opcion =="5":
             eliminar()
         elif opcion =="6":
