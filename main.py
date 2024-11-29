@@ -1,6 +1,7 @@
 import conexion as c
 import paciente_datos as p
 import validar_datos as v
+
 #-----------------------------------------------------------------
 """
  -> PROYECTO: App que gestiona la actividad de COSMETÓLOGA.
@@ -24,7 +25,7 @@ c.conectar()
 #-----------------------------------------------------------------
 # >>> CARGA NUEVO PACIENTE <<<
 #-----------------------------------------------------------------
-# -- Ingresa datos
+
 def nuevo_paciente():
     print("-------------------------------- ")
     print("💠 Ingrese los datos del paciente: ")
@@ -38,6 +39,7 @@ def nuevo_paciente():
 
     dni = input("\n🟢 DNI: ").strip()
     dni = v.validar_entrada(dni, "^[0-9]{7,8}$", "\n🟠 Ingrese un DNI válido (solo números, 7 u 8 dígitos): ")
+    dni = v.dni_repetido(dni, False)
 
     genero = input("\n🟢 Género: ").strip()
     genero = v.validar_entrada(genero, "^[MF]$", "\n🟠 Ingrese un género válido (M/F): ").upper()
@@ -71,16 +73,6 @@ def nuevo_paciente():
         "mail": mail,
         "domicilio": domicilio
     }
-
-    repetido = p.buscar_paciente(nuevo_p['dni'])
-    while True:
-        if repetido['respuesta']:
-            print("\n❌ DNI REPETIDO")
-            dni = input("\n🟠 Ingrese otro DNI:").strip()
-            nuevo_p['dni'] = dni
-            repetido = p.buscar_paciente(nuevo_p['dni'])
-        else:
-            break
 
     nuevo_paciente = p.carga_datos(nuevo_p)
     if nuevo_paciente['respuesta']:
@@ -124,7 +116,7 @@ def resultado_busqueda():
 #-----------------------------------------------------------------
 # >>>  MODIFICA DATOS <<<
 #-----------------------------------------------------------------
-# --- Modifica los datos
+
 def modificar():
     print("\n--- Modificación de Datos 📝 ---")
     paciente = resultado_busqueda()
@@ -166,9 +158,10 @@ def modificar():
         elif dato_a_modificar == "dni":
             nuevo_valor = input("\n🟢 Ingrese el nuevo DNI: ").strip()
             nuevo_valor = v.validar_entrada(nuevo_valor, "^[0-9]{7,8}$", "\n🟠 Ingrese un DNI válido (solo números, 7 u 8 dígitos): ")
+            nuevo_valor = v.dni_repetido(nuevo_valor, True)
             paciente['dni'] = nuevo_valor
             datos_modificados = True
-            print(f"\n✅ DNI actualizado a: {nuevo_valor}")
+            print(f"\n✅ DNI actual: {nuevo_valor}")
         elif dato_a_modificar == "genero" or dato_a_modificar == "género":
             nuevo_valor = input("\n🟢 Ingrese el nuevo género (M/F): ").strip()
             nuevo_valor = v.validar_entrada(nuevo_valor, "^[MF]$", "\n🟠 Ingrese un género válido (M/F): ")
@@ -254,7 +247,9 @@ def modificar():
                     print("\n❌ Opción no válida. Ingrese S para GUARDAR o N para DESCARTAR.")
 #--------------------------- FIN FUNCION MODIFICAR --------------------------------------
 
-# --- Eliminar Paciente
+#-----------------------------------------------------------------
+# >>>  ELIMINAR PACIENTE <<<
+#-----------------------------------------------------------------
 def eliminar():
     print("\n--- Eliminar Paciente 🗑 ---")
     paciente = resultado_busqueda()
@@ -307,7 +302,7 @@ while True:
         print("\t\t 2- Buscar Paciente")
         print("\t\t 3- Modificar datos")
         print("\t\t 4- Mostrar Listado Total")  
-        print("\t\t 5- Eliminar datos de Paciente")
+        print("\t\t 5- Eliminar Paciente")
         print("\t\t 6- Salir")
 
         opcion = input("--> Seleccione una opcion: ")
@@ -319,7 +314,7 @@ while True:
         elif opcion =="3":
             modificar()
         elif opcion =="4":
-            p.mostrar_pacientes()
+            print("Mostrar Listado")
         elif opcion =="5":
             eliminar()
         elif opcion =="6":
