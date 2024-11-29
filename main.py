@@ -292,27 +292,6 @@ def eliminar():
         else:
             print("\n❌ Opción no válida. Inténtelo de nuevo ❌")
 #------------------------ FIN FUNCION ELIMINAR-----------------------------------------
-#-----------------------------------------------------------------
-# >>>  MOSTRAR TABLA <<<
-#-----------------------------------------------------------------
-def mostrar_tabla():
-            respuesta = p.mostrar_pacientes()
-            if respuesta['respuesta']:
-            #Tabla para mostrar los datos de los pacientes
-                # Encabezados
-                headers = ["ID", "Nombre", "Apellido", "DNI", "Género", "Fecha Nac.", "Celular", "Email", "Domicilio"]
-                # Define el ancho de las columnas: ':<' == ancho máximo y el número == cantidad de caractes de espacio
-                formato = "{:<3} {:<10} {:<10} {:<10} {:<10} {:<12} {:<12} {:<25} {:<20}"
-                print(formato.format(*headers))# Imprime encabezados
-                print("-" * 110)#Inserta guiones al final de la tabla
-                # Imprime los pacientes
-                for paciente in respuesta['pacientes']:
-                    print(formato.format(*paciente))
-                print("-" * 110)
-                print(respuesta['mensaje'])
-            else:
-                print(respuesta['mensaje'])       
-#------------------------ FIN FUNCION MOSTRAR TABLA -----------------------------------------
 
 #-----------------------------------------------------------------
 # >>> MENU: <<<
@@ -335,7 +314,7 @@ while True:
         elif opcion =="3":
             modificar()
         elif opcion =="4":
-            mostrar_tabla()
+            print("Mostrar Listado")
         elif opcion =="5":
             eliminar()
         elif opcion =="6":
