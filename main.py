@@ -1,6 +1,7 @@
 import conexion as c
 import paciente_datos as p
 import validar_datos as v
+
 #-----------------------------------------------------------------
 """
  -> PROYECTO: App que gestiona la actividad de COSMETÓLOGA.
@@ -21,19 +22,41 @@ c.conectar()
 #-----------------------------------------------------------------
 # >>> CARGA NUEVO PACIENTE <<<
 #-----------------------------------------------------------------
-# --- Ingresa datos
 def nuevo_paciente():
     print("-------------------------------- ")
     print("💠 Ingrese los datos del paciente: ")
     print("-------------------------------- ")
-    nombre = input ("\n> Nombre: ")
-    apellido = input ("> Apellido: ")
-    dni = int (input ("> DNI: "))
-    genero = input ("> Género: ")
-    fecha_nacimiento = input ("> Fecha de Nacimiento: ")
-    celular = input ("> Celular: ")
-    mail = input ("> Email: ")
-    domicilio = input ("> Domicilio: ")
+   # Validación de datos
+    nombre = input("\n🟢 Nombre: ").strip()
+    nombre = v.validar_entrada(nombre, "^[a-zA-ZáéíóúÁÉÍÓÚ ]+$", "\n🟠 Ingrese un nombre válido (solo letras y espacios): ")
+
+    apellido = input("\n🟢 Apellido: ").strip()
+    apellido = v.validar_entrada(apellido, "^[a-zA-ZáéíóúÁÉÍÓÚ ]+$", "\n🟠 Ingrese un apellido válido (solo letras y espacios): ")
+
+    dni = input("\n🟢 DNI: ").strip()
+    dni = v.validar_entrada(dni, "^[0-9]{7,8}$", "\n🟠 Ingrese un DNI válido (solo números, 7 u 8 dígitos): ")
+    dni = v.dni_repetido(dni, False)
+
+    genero = input("\n🟢 Género: ").strip()
+    genero = v.validar_entrada(genero, "^[MF]$", "\n🟠 Ingrese un género válido (M/F): ").upper()
+
+    mensaje = {
+    "fecha_nacimiento": "\n🟢 Fecha de Nacimiento (DD/MM/YYYY): "
+    }
+    fecha_nacimiento = v.validar_fecha_nacimiento(mensaje)
+    
+    # fecha_nacimiento = input("\n🟢 Fecha de Nacimiento (YYYY-MM-DD): ").strip()
+    # fecha_nacimiento = v.validar_entrada(fecha_nacimiento, "^\d{4}-\d{2}-\d{2}$", "\n🟠 Ingrese una fecha válida (YYYY-MM-DD): ")
+
+    celular = input("\n🟢 Celular: ").strip()
+    celular = v.validar_entrada(celular, "^[0-9]{10}$", "\n🟠 Ingrese un celular válido (solo números de 10 dígitos): ")
+
+    mail = input("\n🟢 Email: ").strip()
+    mail = v.validar_entrada(mail, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", "\n🟠 Ingrese un correo electrónico válido: ")
+
+    domicilio = input("\n🟢 Domicilio: ").strip()
+    domicilio = v.validar_entrada(domicilio, "^[a-zA-Z0-9\s]+$", "\n🟠 Ingrese un domicilio válido (letras, números y espacios): ")
+
 
 # -- Carga diccionario
     nuevo_p = {
@@ -46,16 +69,6 @@ def nuevo_paciente():
         "mail": mail,
         "domicilio": domicilio
     }
-
-    repetido = p.buscar_paciente(nuevo_p['dni'])
-    while True:
-        if repetido['respuesta']:
-            print("\n❌ DNI REPETIDO")
-            dni = input("\n🟠 Ingrese otro DNI:").strip()
-            nuevo_p['dni'] = dni
-            repetido = p.buscar_paciente(nuevo_p['dni'])
-        else:
-            break
 
     nuevo_paciente = p.carga_datos(nuevo_p)
     if nuevo_paciente['respuesta']:
@@ -99,7 +112,7 @@ def resultado_busqueda():
 #-----------------------------------------------------------------
 # >>>  MODIFICA DATOS <<<
 #-----------------------------------------------------------------
-# --- Modifica los datos
+
 def modificar():
     print("\n--- Modificación de Datos 📝 ---")
     paciente = resultado_busqueda()
@@ -141,9 +154,10 @@ def modificar():
         elif dato_a_modificar == "dni":
             nuevo_valor = input("\n🟢 Ingrese el nuevo DNI: ").strip()
             nuevo_valor = v.validar_entrada(nuevo_valor, "^[0-9]{7,8}$", "\n🟠 Ingrese un DNI válido (solo números, 7 u 8 dígitos): ")
+            nuevo_valor = v.dni_repetido(nuevo_valor, True)
             paciente['dni'] = nuevo_valor
             datos_modificados = True
-            print(f"\n✅ DNI actualizado a: {nuevo_valor}")
+            print(f"\n✅ DNI actual: {nuevo_valor}")
         elif dato_a_modificar == "genero" or dato_a_modificar == "género":
             nuevo_valor = input("\n🟢 Ingrese el nuevo género (M/F): ").strip()
             nuevo_valor = v.validar_entrada(nuevo_valor, "^[MF]$", "\n🟠 Ingrese un género válido (M/F): ")
@@ -320,7 +334,7 @@ while True:
         elif opcion =="3":
             modificar()
         elif opcion =="4":
-            p.mostrar_pacientes()
+            print("Mostrar Listado")
         elif opcion =="5":
             ordenamiento()
         elif opcion == "6":
