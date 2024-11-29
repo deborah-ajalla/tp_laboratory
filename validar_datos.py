@@ -51,3 +51,16 @@ def cargar_datos():
 
     motivo_consulta = validar_entrada(input("Ingrese el motivo de consulta del paciente: "), "^[a-zA-ZáéíóúÁÉÍÓÚ ]+$", mensajes_error["motivo_consulta"])
     tratamiento = validar_entrada(input("Ingrese el tratamiento del paciente: "), "^[a-zA-ZáéíóúÁÉÍÓÚ ]+$", mensajes_error["tratamiento"])
+
+def validar_fecha_nacimiento(mensajes_error):
+
+  while True:
+    fecha_nacimiento = input(mensajes_error["fecha_nacimiento"])
+    try:
+      fecha_nacimiento = datetime.datetime.strptime(fecha_nacimiento, "%d/%m/%Y").date()
+      if fecha_nacimiento > datetime.date.today():
+        print("\n❌ La fecha de nacimiento no puede ser en el futuro.")
+      else:
+        return fecha_nacimiento
+    except ValueError:
+      print("\n🟠 Fecha inválida. Intente nuevamente por favor.")
