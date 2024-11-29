@@ -66,6 +66,7 @@ def validar_fecha_nacimiento(mensajes_error):
     except ValueError:
       print("\n🟠 Fecha inválida. Intente nuevamente por favor.")
 
+#---funcion validar dni repetido
 def dni_repetido(numero, modificar):
     repetido = p.buscar_paciente(numero)
     while repetido['respuesta']: 
