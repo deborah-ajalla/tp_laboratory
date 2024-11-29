@@ -14,33 +14,35 @@ def carga_datos (paciente):
         sql = """
               INSERT INTO pacientes {campos} VALUES (?,?,?,?,?,?,?,?)
               """.format (campos = columnas)
-        
+
         cursor.execute(sql, (valores))
 
         creado = cursor.rowcount > 0
         db.commit()
-        
+
         if creado:
             # cursor.close()
             # db.close()
-            print ("\n 🔸 Paciente Registrado  Exitosamente 🔸 ✅")  
+            return {"respuesta": True,
+                "mensaje": "\n 🔸 Paciente Registrado  Exitosamente 🔸 ✅"}
         else:
             # cursor.close()
             # db.close()
-            print ("\n ❌❌ No se ha podido realizar la carga de datos. Aguarde e Intente Nuevamente... ❌❌")
-        
+            return {"respuesta": True,
+                "mensaje": "\n ❌❌ No se ha podido realizar la carga de datos. Aguarde e Intente Nuevamente... ❌❌"}
+
     except Exception as e:
-        if "UNIQUE" in  str (e) and "DNI" in str (e):                 # --> verifica que sólo haya un paciente por DNI
-            mensaje = "Ya existe un Paciente registrada con ese DNI"
-        elif "UNIQUE" in  str (e) and "MAIL" in str (e):              # --> verifica que sólo haya un MAIL por paciente
-            mensaje = "Ya existe un paciente que registró ese Mail, por favor indique otro..."
-        elif "UNIQUE" in  str (e) and "CELULAR" in str (e):           # --> verifica que sólo haya un CELULAR por paciente
-            mensaje = "Ya existe un paciente que registró ese Celular de Contacto, por favor indique otro..."
-        else:
+        # if "UNIQUE" in  str (e) and "DNI" in str (e):                 # --> verifica que sólo haya un paciente por DNI
+        #     mensaje = "Ya existe un Paciente registrada con ese DNI"
+        # elif "UNIQUE" in  str (e) and "MAIL" in str (e):              # --> verifica que sólo haya un MAIL por paciente
+        #     mensaje = "Ya existe un paciente que registró ese Mail, por favor indique otro..."
+        # elif "UNIQUE" in  str (e) and "CELULAR" in str (e):           # --> verifica que sólo haya un CELULAR por paciente
+        #     mensaje = "Ya existe un paciente que registró ese Celular de Contacto, por favor indique otro..."
+        # else:
             mensaje = str(e) 
             # cursor.close()
             # db.close()
-             
+
             return {"respuesta": False,
                 "mensaje": mensaje}
     finally:
@@ -130,29 +132,17 @@ def mostrar_pacientes ():
         pacientes = cursor.fetchall()
 
         if pacientes:
-            columnas = [descripcion[0] for descripcion in cursor.description]     #-->  Recuperar los nombres de las columnas
-
-            print ("-----------------------------------")
-            print(f"--> Listado de Pacientes: <--") 
-            print ("-----------------------------------")
-            
-            for paciente in pacientes: # Mostrar los registros con los nombres de las columnas
-                 fila = dict(zip(columnas, paciente))  # Combinar nombre de columnas con los datos correspondientes de la fila
-
-                 for clave, valor in fila.items():
-                    print(f"{clave}: {valor}")
-                 print ("--------------------------------------")
+            cursor.close()
+            db.close()
+            return {"respuesta": True, "pacientes": pacientes, "mensaje": "Listado todo OK ✔"}
         else:
-         
-            print (" >> No hay Pacientes registrados aun... ❌")
+            cursor.close()
+            db.close()
+            return {"respuesta": False ,"pacientes": pacientes,  "mensaje": "\nNo hay Pacientes registrados aun... ❌"}
     except Exception as e:
-        # cursor.close()
-        # db.close()
-        return {"respuesta": False, "mensaje": str (e)}
-    finally:
         cursor.close()
         db.close()
-    
+        return {"respuesta": False, "mensaje": str (e)}
 #-----------------------------------------------------------------
 # MENÚ OPCIÓN 5: ELIMINAR
 #-----------------------------------------------------------------
