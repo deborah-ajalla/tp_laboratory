@@ -1,4 +1,5 @@
 import conexion as c
+
 #-----------------------------------------------------------------
 # MENÚ OPCIÓN 1: INGRESAR NUEVO PACIENTE
 #-----------------------------------------------------------------
@@ -80,7 +81,7 @@ def buscar_paciente (dni_buscado):
 # MENÚ OPCIÓN 3: MODIFICAR DATOS
 #-----------------------------------------------------------------
 def actualizar_datos(paciente):
-    try:
+    try:#
         # Asegurarse de que el diccionario contiene todos los campos necesarios      
         id = paciente['id']
         nombre = paciente['nombre']
@@ -121,18 +122,44 @@ def mostrar_pacientes ():
         db = c.conectar()
         cursor = db.cursor()
         cursor.execute("SELECT * FROM pacientes")
-        pacientes = cursor.fetchall()
+        pacientes = cursor.fetchall()   #-- Obtiene TODOS los registros de la tabla
+
+        print ("------------------------------------")
+        print(f"--> Listado de Pacientes <--") 
+        print ("------------------------------------")
 
         if pacientes:
-            cursor.close()
-            db.close()
-            return {"respuesta": True, "pacientes": pacientes, "mensaje": "Listado todo OK ✔"}
+           # Mostrar los registros en la consola
+
+            print(f"{'ID':<6} {'Nombre':<10} {'Apellido':<17} {'Dni':<12} {'Género':<12} {'Fecha de Nacimiento':<14} {'Celular':<30} {'Mail':<13} {'Domicilio':<25}")  # Encabezados de la tabla
+            print('-' * 155)  # Línea divisoria
+            for paciente in pacientes:
+                print(f"{paciente[0]:<6} {paciente[1]:<10} {paciente[2]:<13} {paciente[3]:<12} {paciente[4]:<14} {paciente[5]:<24} {paciente[6]:<11} {paciente[7]:<20} {paciente[8]:<12}")
+
         else:
-         
-            print (" >> No hay Pacientes registrados aun... ❌")
+            print("No se encontraron registros.")
+                
+
+        # Obtener los encabezados
+        # columnas = [descripcion[0] for descripcion in cursor.description]
+        # print(" | ".join(columnas))
+
+        # # Mostrar los registros
+        # for registro in cursor:
+        #     print(" | ".join(str(campo) for campo in registro))
+
+        # if pacientes:
+        #     for paciente in pacientes:
+        #         print (paciente)
+        # else:
+        #     print (" >> No hay Pacientes registrados aun... ❌")
     except Exception as e:
+        return {"respuesta": False, "mensaje": str (e)}
+
+    finally:
         cursor.close()
         db.close()
+
     
 #-----------------------------------------------------------------
 # MENÚ OPCIÓN 5: MOSTRAR LISTADO ORDENADO 

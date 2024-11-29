@@ -334,7 +334,7 @@ while True:
         elif opcion =="3":
             modificar()
         elif opcion =="4":
-            print("Mostrar Listado")
+            p.mostrar_pacientes()
         elif opcion =="5":
             ordenamiento()
         elif opcion == "6":
