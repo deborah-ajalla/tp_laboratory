@@ -13,16 +13,13 @@ import paciente_datos as p
  -> AÑO: 2024.
 """
 #-----------------------------------------------------------------
-print ("--------------------------------------------------------------")
-
 # --> pruebo creacion de BBDD <--
 c.conectar()
 
-# ----> FUNCIONES <----
 #-----------------------------------------------------------------
 # >>> CARGA NUEVO PACIENTE <<<
 #-----------------------------------------------------------------
-# -- Ingresa datos
+# --- Ingresa datos
 def nuevo_paciente ():
     print("-------------------------------- ")
     print("Ingrese los datos del paciente: ")
@@ -36,7 +33,7 @@ def nuevo_paciente ():
     mail = input ("> Email: ")
     domicilio = input ("> Domicilio: ")
 
-# -- Carga diccionario
+# --- Carga diccionario
     nuevo_p = {
         "nombre": nombre,
         "apellido": apellido,
@@ -92,7 +89,7 @@ def modificar():
     print("\n--- Modificación de Datos 📝 ---")
     paciente = resultado_busqueda()
 
-    while not paciente:  # En caso de no encontrar coindidencias busca un paciente hasta que el usuario decida salir
+    while not paciente:  # --- En caso de no encontrar coindidencias busca un paciente hasta que el usuario decida salir
         print("¿Qué desea hacer?")
         print("\t 1- Buscar otro paciente")
         print("\t 2- Regresar al Menú Principal")
@@ -100,7 +97,7 @@ def modificar():
             
         if seleccionado == "1":
             paciente = resultado_busqueda()
-            continue  # Repite la búsqueda
+            continue  # --- Repite la búsqueda
         elif seleccionado == "2":
             print("\n🏠 Regresando al Menú Principal...")
             return  
@@ -108,11 +105,11 @@ def modificar():
             print("\n❌ Opción no válida. Inténtelo de nuevo.")
             continue
 
-        # Sale del bucle si encontró un paciente para continuar con la operación de modificar datos
-    
+    # --- Sale del bucle si encontró un paciente para continuar con la operación de modificar datos
     dato_a_modificar = input("\n✍  Escriba el nombre del dato a modificar (ej: Email): ").strip().lower()
     datos_modificados = False
-    # Modificar valores según el dato introducido 
+
+    # --- Modificar valores según el dato introducido 
     while True:
         if dato_a_modificar == "nombre":
             nuevo_valor = input("\n🟢 Ingrese el nuevo nombre: ").strip()
@@ -173,7 +170,7 @@ def modificar():
         mostrar_datos(paciente)
         continuar_modificando = True
 
-        #Pregunta
+        # --- Pregunta
         while True:
             continuar = input("\n🛑 ¿Desea continuar con la modificación de datos? (s/n): ").strip().lower()
             if continuar == "s":
@@ -185,10 +182,10 @@ def modificar():
             else:
                 print("\n❌ Opción no válida. Inténtelo de nuevo.")
 
-        #Confirmacion para guardar los datos modificados
+        # --- Confirmacion para guardar los datos modificados
         if not continuar_modificando:
 
-            while True: #Únicamente acepta s o n como opciones válidas
+            while True:        # --- Únicamente acepta s o n como opciones válidas
                 confirmar = input("\n🛑 ¿Desea guardar los cambios? (s/n): ").strip().lower()
                 if confirmar == "s":
                     resultado = p.actualizar_datos(paciente)
@@ -205,14 +202,39 @@ def modificar():
                     return
                 else:
                     print("\n❌ Opción no válida. Ingrese S para GUARDAR o N para DESCARTAR.")
-#--------------------------- FIN FUNCION MODIFICAR --------------------------------------
+#-----------------------------------------------------------------
+# >>>  ORDENA LISTADOS  <<<
+#-----------------------------------------------------------------
+def ordenamiento():
+    while True:
+         print("\n ◾ Elija Cómo Ver Listado: ")
+         print("\t\t 1- Por Apellido")
+         print("\t\t 2- Por ID")
+         print("\t\t 3- Por DNI")
+         print("\t\t 4- Volver al Menú Principal")
 
+         opcion = input("-> Seleccione una opcion: ")
+         if opcion == "1":
+            p.listado_ordenado_apellido()
+         elif opcion == "2":
+            pass
+            p.listado_ordenado_id() 
+         elif opcion =="3":
+            p.listado_ordenado_dni()
+         elif opcion =="4":
+            break
+         else :
+            print("Opción Inválida")
+
+#-----------------------------------------------------------------
+# >>>  ELIMINA  DATOS DE PACIENTE  <<<
+#-----------------------------------------------------------------
 # --- Eliminar Paciente
 def eliminar():
     print("\n--- Eliminar Paciente 🗑 ---")
     paciente = resultado_busqueda()
 
-    while not paciente:  # En caso de no encontrar coindidencias busca un paciente hasta que el usuario decida salir
+    while not paciente:        # --- En caso de no encontrar coindidencias busca un paciente hasta que el usuario decida salir
         print("¿Qué desea hacer?")
         print("\t 1- Buscar otro paciente")
         print("\t 2- Regresar al Menú Principal")
@@ -220,7 +242,7 @@ def eliminar():
             
         if seleccionado == "1":
             paciente = resultado_busqueda()
-            continue  # Repite la búsqueda
+            continue           # --- Repite la búsqueda
         elif seleccionado == "2":
             print("\n🏠 Regresando al Menú Principal...")
             return  
@@ -228,8 +250,7 @@ def eliminar():
             print("\n❌ Opción no válida. Inténtelo de nuevo.")
             continue
 
-        # Sale del bucle si encontró un paciente para continuar con la operación de Eliminar
-
+    # --- Sale del bucle si encontró un paciente para continuar con la operación de Eliminar
     while True:
         print(f"\n🛑 ¿Desea eliminar a {paciente['apellido']} {paciente['nombre']}? (s/n): ")
         print("\n⚠ IMPORTANTE: Una vez eliminado, no se podrá recuperar.")
@@ -249,21 +270,23 @@ def eliminar():
             return
         else:
             print("\n❌ Opción no válida. Inténtelo de nuevo ❌")
-#------------------------ FIN FUNCION ELIMINAR-----------------------------------------
 
 #-----------------------------------------------------------------
 # >>> MENU: <<<
 #-----------------------------------------------------------------
 while True:
-        print("\n  >>>>>  Sistema de Gestion de Pacientes de Centro de Estética  <<<<<\n")
-        print("\t\t 1- Ingresar Nuevo Paciente")
+        print ("------------------------------------------------------------------------")
+        print(">>>>>  Sistema de Gestion de Pacientes de Centro de Estética  <<<<<")
+        print ("------------------------------------------------------------------------")
+        print("\t\t 1- Cargar Nuevo Paciente")
         print("\t\t 2- Buscar Paciente")
-        print("\t\t 3- Modificar datos")
+        print("\t\t 3- Modificar Datos")
         print("\t\t 4- Mostrar Listado Total")  
-        print("\t\t 5- Eliminar datos de Paciente")
-        print("\t\t 6- Salir")
+        print("\t\t 5- Mostrar Listado Ordenado")  
+        print("\t\t 6- Eliminar Datos de Paciente")
+        print("\t\t 7- Salir")
 
-        opcion = input("--> Seleccione una opcion: ")
+        opcion = input("\n--> Seleccione una opcion: ")
         if opcion =="1":
             nuevo_paciente()
         elif opcion =="2":
@@ -274,9 +297,13 @@ while True:
         elif opcion =="4":
             p.mostrar_pacientes()
         elif opcion =="5":
+            ordenamiento()
+        elif opcion == "6":
             eliminar()
-        elif opcion =="6":
-            print("⏩ Hasta la próxima!!!⏪")
+        elif opcion =="7":
+            print ("\n------------------------------------------------------------------------")
+            print("\t\t >>>>>  Fin del Programa  <<<<<")
+            print ("------------------------------------------------------------------------\n")
             break
         else :
             print("Opción Inválida")

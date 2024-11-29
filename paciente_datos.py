@@ -21,13 +21,9 @@ def carga_datos (paciente):
         db.commit()
         
         if creado:
-            # cursor.close()
-            # db.close()
-            print ("\n 🔸 Paciente Registrado  Exitosamente 🔸 ✅")  
+            return ("\n 🔸 Paciente Registrado Exitosamente 🔸 ✅")  
         else:
-            # cursor.close()
-            # db.close()
-            print ("\n ❌❌ No se ha podido realizar la carga de datos. Aguarde e Intente Nuevamente... ❌❌")
+            return ("\n ❌❌ No se ha podido realizar la carga de datos. Aguarde e Intente Nuevamente... ❌❌")
         
     except Exception as e:
         if "UNIQUE" in  str (e) and "DNI" in str (e):                 # --> verifica que sólo haya un paciente por DNI
@@ -41,8 +37,7 @@ def carga_datos (paciente):
             # cursor.close()
             # db.close()
              
-            return {"respuesta": False,
-                "mensaje": mensaje}
+            return {"respuesta": False, "mensaje": mensaje}
     finally:
         db.close()
     
@@ -79,14 +74,13 @@ def buscar_paciente (dni_buscado):
         cursor.close()
         db.close()
         return {"respuesta": False, "mensaje": str (e)} 
+    
 #-----------------------------------------------------------------
 # MENÚ OPCIÓN 3: MODIFICAR DATOS
 #-----------------------------------------------------------------
-
 def actualizar_datos(paciente):
     try:
-        # Asegurarse de que el diccionario contiene todos los campos necesarios
-        
+        # Asegurarse de que el diccionario contiene todos los campos necesarios      
         id = paciente['id']
         nombre = paciente['nombre']
         apellido = paciente['apellido']
@@ -118,7 +112,6 @@ def actualizar_datos(paciente):
     except Exception as e:
         return {"respuesta": False, "mensaje": f"⚠{e}"}
 
-
 #-----------------------------------------------------------------
 # MENÚ OPCIÓN 4: MOSTRAR LISTADO TOTAL
 #-----------------------------------------------------------------
@@ -143,7 +136,6 @@ def mostrar_pacientes ():
                     print(f"{clave}: {valor}")
                  print ("--------------------------------------")
         else:
-         
             print (" >> No hay Pacientes registrados aun... ❌")
     except Exception as e:
         # cursor.close()
@@ -152,9 +144,81 @@ def mostrar_pacientes ():
     finally:
         cursor.close()
         db.close()
-    
+
 #-----------------------------------------------------------------
-# MENÚ OPCIÓN 5: ELIMINAR
+# MENÚ OPCIÓN 5: MOSTRAR LISTADO ORDENADO 
+#-----------------------------------------------------------------
+def listado_ordenado_apellido():
+    try:
+        db = c.conectar()
+        cursor = db.cursor()
+
+        cursor.execute ("SELECT * FROM pacientes ORDER BY apellido ASC")
+
+        pacientes = cursor.fetchall()  # --Obtiene los registros
+
+        print ("-----------------------------------------------------")
+        print(f"--> Listado de Pacientes Ordenados por Apellido: <--") 
+        print ("-----------------------------------------------------")
+
+        for paciente in pacientes:
+            print(f'🔹 {paciente[2]} {paciente[1]}, Id: {paciente[0]}, Dni: {paciente[3]}')
+                    
+    except Exception as e:
+         return {"respuesta": False, "mensaje": str (e)}
+
+    finally:
+        cursor.close()
+        db.close()
+
+def listado_ordenado_id():
+    try:
+        db = c.conectar()
+        cursor = db.cursor()
+
+        cursor.execute ("SELECT * FROM pacientes ORDER BY id ASC")
+
+        pacientes = cursor.fetchall()  # --Obtiene los registros
+
+        print ("-----------------------------------------------------")
+        print(f"--> Listado de Pacientes Ordenados por Id: <--") 
+        print ("-----------------------------------------------------")
+
+        for paciente in pacientes:
+            print(f'🔹 Id: {paciente[0]}, {paciente[1]} {paciente[2]}, Dni: {paciente[3]}')
+                    
+    except Exception as e:
+         return {"respuesta": False, "mensaje": str (e)}
+
+    finally:
+        cursor.close()
+        db.close()
+
+def listado_ordenado_dni():
+    try:
+        db = c.conectar()
+        cursor = db.cursor()
+
+        cursor.execute ("SELECT * FROM pacientes ORDER BY dni ASC")
+
+        pacientes = cursor.fetchall()  # --Obtiene los registros
+
+        print ("-----------------------------------------------------")
+        print(f"--> Listado de Pacientes Ordenados por Dni: <--") 
+        print ("-----------------------------------------------------")
+
+        for paciente in pacientes:
+            print(f'🔹 Dni: {paciente[3]}, {paciente[1]} {paciente[2]}, Id: {paciente[0]}')
+                    
+    except Exception as e:
+         return {"respuesta": False, "mensaje": str (e)}
+
+    finally:
+        cursor.close()
+        db.close()
+
+#-----------------------------------------------------------------
+# MENÚ OPCIÓN 6: ELIMINAR
 #-----------------------------------------------------------------
 def eliminar_paciente(id_paciente):
     try:
