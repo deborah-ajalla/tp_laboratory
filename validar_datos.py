@@ -1,5 +1,6 @@
 import re
 import datetime
+import paciente_datos as p
 
 def validar_entrada(entrada, patron, mensaje_error):
     while not re.match(patron, entrada):
@@ -64,3 +65,21 @@ def validar_fecha_nacimiento(mensajes_error):
         return fecha_nacimiento
     except ValueError:
       print("\n🟠 Fecha inválida. Intente nuevamente por favor.")
+
+def dni_repetido(numero, modificar):
+    repetido = p.buscar_paciente(numero)
+    while repetido['respuesta']: 
+        if modificar: 
+            print("\n❌ El DNI ingresado ya está registrado en el sistema. Por favor, verifique si pertenece al actual paciente.")
+            respuesta = input("\n🛑 ¿Desea cancelar la modificación? (s/n): ").strip()
+            while respuesta not in ('s', 'n'): 
+                print("\n❌ Opción no válida. Inténtelo de nuevo.")
+                respuesta = input("\n🛑 ¿Desea cancelar la modificación? (s/n): ").strip()
+            if respuesta == 's':
+                print("\n✅ Modificación de DNI CANCELADA.")
+                return  numero
+        # Solo se ingresa n
+        dni = input("\n🟠 Ingrese otro DNI: ").strip()
+        dni = validar_entrada(dni, "^[0-9]{7,8}$", "\n🟠 Ingrese un DNI válido (solo números, 7 u 8 dígitos): ")
+        repetido = p.buscar_paciente(dni)
+    return dni

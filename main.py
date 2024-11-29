@@ -25,7 +25,7 @@ c.conectar()
 #-----------------------------------------------------------------
 # >>> CARGA NUEVO PACIENTE <<<
 #-----------------------------------------------------------------
-# -- Ingresa datos
+
 def nuevo_paciente():
     print("-------------------------------- ")
     print("💠 Ingrese los datos del paciente: ")
@@ -39,6 +39,7 @@ def nuevo_paciente():
 
     dni = input("\n🟢 DNI: ").strip()
     dni = v.validar_entrada(dni, "^[0-9]{7,8}$", "\n🟠 Ingrese un DNI válido (solo números, 7 u 8 dígitos): ")
+    dni = v.dni_repetido(dni, False)
 
     genero = input("\n🟢 Género: ").strip()
     genero = v.validar_entrada(genero, "^[MF]$", "\n🟠 Ingrese un género válido (M/F): ").upper()
@@ -72,16 +73,6 @@ def nuevo_paciente():
         "mail": mail,
         "domicilio": domicilio
     }
-
-    repetido = p.buscar_paciente(nuevo_p['dni'])
-    while True:
-        if repetido['respuesta']:
-            print("\n❌ DNI REPETIDO")
-            dni = input("\n🟠 Ingrese otro DNI:").strip()
-            nuevo_p['dni'] = dni
-            repetido = p.buscar_paciente(nuevo_p['dni'])
-        else:
-            break
 
     nuevo_paciente = p.carga_datos(nuevo_p)
     if nuevo_paciente['respuesta']:
@@ -167,9 +158,10 @@ def modificar():
         elif dato_a_modificar == "dni":
             nuevo_valor = input("\n🟢 Ingrese el nuevo DNI: ").strip()
             nuevo_valor = v.validar_entrada(nuevo_valor, "^[0-9]{7,8}$", "\n🟠 Ingrese un DNI válido (solo números, 7 u 8 dígitos): ")
+            nuevo_valor = v.dni_repetido(nuevo_valor, True)
             paciente['dni'] = nuevo_valor
             datos_modificados = True
-            print(f"\n✅ DNI actualizado a: {nuevo_valor}")
+            print(f"\n✅ DNI actual: {nuevo_valor}")
         elif dato_a_modificar == "genero" or dato_a_modificar == "género":
             nuevo_valor = input("\n🟢 Ingrese el nuevo género (M/F): ").strip()
             nuevo_valor = v.validar_entrada(nuevo_valor, "^[MF]$", "\n🟠 Ingrese un género válido (M/F): ")
