@@ -20,13 +20,14 @@ def cargar_datos():
         "domicilio": "Ingrese un domicilio válido (letras, números): "
 }
     
-    dnis_registrados = []  # Lista para almacenar los DNIs ingresados
+    dnis_registrados = []  # --> Lista para almacenar los DNIs ingresados
 
 
     nombre = validar_entrada(input("Ingrese el nombre del paciente: ").title(), "^[a-zA-ZáéíóúÁÉÍÓÚ ]{2,}$", mensajes_error["nombre"])
     apellido = validar_entrada(input("Ingrese el apellido del paciente: ").title(), "^[a-zA-ZáéíóúÁÉÍÓÚ ]{2,}$", mensajes_error["apellido"])
-        
-     # Validación de DNI y almacenamiento en la lista
+    
+    
+     # --> Validación de DNI y almacenamiento en la lista
     dni = validar_entrada(input("Ingrese el DNI del paciente: "), "^[0-9]{7,8}$", mensajes_error["dni"])
     while dni in dnis_registrados:
         print("El DNI ya está registrado. Ingrese otro DNI.")
@@ -37,7 +38,7 @@ def cargar_datos():
     genero = validar_entrada(input("Ingrese el género del paciente (M/F): ").upper(), "^[MF]$", mensajes_error["genero"])
     domicilio = validar_entrada(input(mensajes_error["domicilio"]), "^[a-zA-Z0-9\s]+$", mensajes_error["domicilio"])
 
-    # Validación fecha de nacimiento 
+    # --> Validación fecha de nacimiento 
     while True:
         fecha_nacimiento = input(mensajes_error["fecha_nacimiento"])
         try:
@@ -65,21 +66,3 @@ def validar_fecha_nacimiento(mensajes_error):
     except ValueError:
       print("\n🟠 Fecha inválida. Intente nuevamente por favor.")
 
-#---funcion validar dni repetido
-# def dni_repetido(numero, modificar):
-#     repetido = p.buscar_paciente(numero)
-#     while repetido['respuesta']: 
-#         if modificar: 
-#             print("\n❌ El DNI ingresado ya está registrado en el sistema. Por favor, verifique si pertenece al actual paciente.")
-#             respuesta = input("\n🛑 ¿Desea cancelar la modificación? (s/n): ").strip()
-#             while respuesta not in ('s', 'n'): 
-#                 print("\n❌ Opción no válida. Inténtelo de nuevo.")
-#                 respuesta = input("\n🛑 ¿Desea cancelar la modificación? (s/n): ").strip()
-#             if respuesta == 's':
-#                 print("\n✅ Modificación de DNI CANCELADA.")
-#                 return  numero
-#         # Solo se ingresa n
-#         dni = input("\n🟠 Ingrese otro DNI: ").strip()
-#         dni = validar_entrada(dni, "^[0-9]{7,8}$", "\n🟠 Ingrese un DNI válido (solo números, 7 u 8 dígitos): ")
-#         repetido = p.buscar_paciente(dni)
-#     return dni

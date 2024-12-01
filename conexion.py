@@ -1,6 +1,5 @@
 import sqlite3
 #--------------------------------------------------------------------
-
 # ----> CONEXION <----
 def conectar ():
     mi_conexion = sqlite3.connect ("tp.db")    # -> almaceno en variable la conexion que crea la BBDD
@@ -26,11 +25,12 @@ def conectar ():
              (
               ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
               NOMBRE TEXT NOT NULL,
-              FECHA TEXT NOT NULL
+              DESCRIPCION TEXT NOT NULL,
+              DNI_PACIENTES INTEGER,
+              FOREIGN KEY (DNI_PACIENTES) REFERENCES pacientes (DNI)
               )
               """
         cursor.executescript(sql)       # para ejecutar multiples instrucciones... sino sería execute. ❌
-        # cursor.close()
         return mi_conexion
     
     except Exception as e:

@@ -1,9 +1,9 @@
 import conexion as c
 import paciente_datos as p
 import validar_datos as v
+import tratamientos as t
 import re
 from datetime import datetime
-
 #-----------------------------------------------------------------
 """
  -> PROYECTO: App que gestiona la actividad de COSMETÓLOGA.
@@ -17,18 +17,18 @@ from datetime import datetime
  -> AÑO: 2024.
 """
 #-----------------------------------------------------------------
-# --> pruebo creacion de BBDD <--
+# --> pruebo creacion de BBDD 
 c.conectar()
-
-
 #-----------------------------------------------------------------
 # >>> CARGA NUEVO PACIENTE <<<
 #-----------------------------------------------------------------
+
 def nuevo_paciente():
     print("-------------------------------- ")
     print("💠 Ingrese los datos del paciente: ")
     print("-------------------------------- ")
-   # Validación de datos
+
+    # --> Validación de datos
     nombre = input("\n🟢 Nombre: ").strip().title()
     nombre = v.validar_entrada(nombre, "^[a-zA-ZáéíóúÁÉÍÓÚ ]{2,}$", "\n🟠 Ingrese un nombre válido (solo letras): ")
 
@@ -37,7 +37,6 @@ def nuevo_paciente():
 
     dni = input("\n🟢 DNI: ").strip()
     dni = v.validar_entrada(dni, "^[0-9]{7,8}$", "\n🟠 Ingrese un DNI válido (solo números, 7 u 8 dígitos): ")
-    # dni = v.dni_repetido(dni, False)
 
     genero = input("\n🟢 Género: ").strip().upper()
     genero = v.validar_entrada(genero, "^[MF]$", "\n🟠 Ingrese un género válido (M/F): ").upper()
@@ -47,9 +46,6 @@ def nuevo_paciente():
     }
     fecha_nacimiento = v.validar_fecha_nacimiento(mensaje)
     
-    # fecha_nacimiento = input("\n🟢 Fecha de Nacimiento (YYYY-MM-DD): ").strip()
-    # fecha_nacimiento = v.validar_entrada(fecha_nacimiento, "^\d{4}-\d{2}-\d{2}$", "\n🟠 Ingrese una fecha válida (YYYY-MM-DD): ")
-
     celular = input("\n🟢 Celular: ").strip()
     celular = v.validar_entrada(celular, "^[0-9]{10}$", "\n🟠 Ingrese un celular válido (solo números de 10 dígitos): ")
 
@@ -58,7 +54,6 @@ def nuevo_paciente():
 
     domicilio = input("\n🟢 Domicilio: ").strip()
     domicilio = v.validar_entrada(domicilio, "^[a-zA-Z0-9\s]+$", "\n🟠 Ingrese un domicilio válido (sólo letras y números): ")
-
 
 # -- Carga diccionario
     nuevo_p = {
@@ -109,7 +104,7 @@ def resultado_busqueda():
     else: 
         print("\n--- Resultado de la Búsqueda 👇")
         print(resultado["mensaje"])
-        return None  # Retorna None si no se encuentra el paciente
+        return None  # --> Retorna None si no se encuentra el paciente
     
 #-----------------------------------------------------------------
 # >>>  MODIFICA DATOS <<<
@@ -119,7 +114,7 @@ def modificar():
     print("\n--- Modificación de Datos 📝 ---")
     paciente = resultado_busqueda()
 
-    while not paciente:  # --- En caso de no encontrar coindidencias busca un paciente hasta que el usuario decida salir
+    while not paciente:       # --> En caso de no encontrar coindidencias busca un paciente hasta que el usuario decida salir
         print("¿Qué desea hacer?")
         print("\t 1- Buscar otro paciente")
         print("\t 2- Regresar al Menú Principal")
@@ -127,7 +122,7 @@ def modificar():
             
         if seleccionado == "1":
             paciente = resultado_busqueda()
-            continue  # --- Repite la búsqueda
+            continue          # --> Repite la búsqueda
         elif seleccionado == "2":
             print("\n🏠 Regresando al Menú Principal...")
             return  
@@ -135,11 +130,11 @@ def modificar():
             print("\n❌ Opción no válida. Inténtelo de nuevo.")
             continue
 
-    # --- Sale del bucle si encontró un paciente para continuar con la operación de modificar datos
+    # --> Sale del bucle si encontró un paciente para continuar con la operación de modificar datos
     dato_a_modificar = input("\n✍  Escriba el nombre del dato a modificar (ej: Email): ").strip().lower()
     datos_modificados = False
 
-    # --- Modificar valores según el dato introducido 
+    # --> Modificar valores según el dato introducido 
     while True:
         if dato_a_modificar == "nombre":
             nuevo_valor = input("\n🟢 Ingrese el nuevo nombre: ").strip()
@@ -156,7 +151,7 @@ def modificar():
         elif dato_a_modificar == "dni":
             nuevo_valor = input("\n🟢 Ingrese el nuevo DNI: ").strip()
             nuevo_valor = v.validar_entrada(nuevo_valor, "^[0-9]{7,8}$", "\n🟠 Ingrese un DNI válido (solo números, 7 u 8 dígitos): ")
-            # nuevo_valor = v.dni_repetido(nuevo_valor, True)
+       
             paciente['dni'] = nuevo_valor
             datos_modificados = True
             print(f"\n✅ DNI actual: {nuevo_valor}")
@@ -211,7 +206,7 @@ def modificar():
         mostrar_datos(paciente)
         continuar_modificando = True
 
-        # --- Pregunta
+        # --> Pregunta
         while True:
             continuar = input("\n🛑 ¿Desea continuar con la modificación de datos? (s/n): ").strip().lower()
             if continuar == "s":
@@ -223,10 +218,10 @@ def modificar():
             else:
                 print("\n❌ Opción no válida. Inténtelo de nuevo.")
 
-        # --- Confirmacion para guardar los datos modificados
+        # --> Confirmacion para guardar los datos modificados
         if not continuar_modificando:
 
-            while True:        # --- Únicamente acepta s o n como opciones válidas
+            while True:        # --> Únicamente acepta s o n como opciones válidas
                 confirmar = input("\n🛑 ¿Desea guardar los cambios? (s/n): ").strip().lower()
                 if confirmar == "s":
                     resultado = p.actualizar_datos(paciente)
@@ -270,12 +265,12 @@ def ordenamiento():
 #-----------------------------------------------------------------
 # >>>  ELIMINA  DATOS DE PACIENTE  <<<
 #-----------------------------------------------------------------
-# --- Eliminar Paciente
+# --> Eliminar Paciente
 def eliminar():
     print("\n--- Eliminar Paciente 🗑 ---")
     paciente = resultado_busqueda()
 
-    while not paciente:        # --- En caso de no encontrar coindidencias busca un paciente hasta que el usuario decida salir
+    while not paciente:        # --> En caso de no encontrar coindidencias busca un paciente hasta que el usuario decida salir
         print("¿Qué desea hacer?")
         print("\t 1- Buscar otro paciente")
         print("\t 2- Regresar al Menú Principal")
@@ -283,7 +278,7 @@ def eliminar():
             
         if seleccionado == "1":
             paciente = resultado_busqueda()
-            continue           # --- Repite la búsqueda
+            continue           # --> Repite la búsqueda
         elif seleccionado == "2":
             print("\n🏠 Regresando al Menú Principal...")
             return  
@@ -291,7 +286,7 @@ def eliminar():
             print("\n❌ Opción no válida. Inténtelo de nuevo.")
             continue
 
-    # --- Sale del bucle si encontró un paciente para continuar con la operación de Eliminar
+    # --> Sale del bucle si encontró un paciente para continuar con la operación de Eliminar
     while True:
         print(f"\n🛑 ¿Desea eliminar a {paciente['apellido']} {paciente['nombre']}? (s/n): ")
         print("\n⚠ IMPORTANTE: Una vez eliminado, no se podrá recuperar.")
@@ -313,90 +308,6 @@ def eliminar():
             print("\n❌ Opción no válida. Inténtelo de nuevo ❌")
 
 #-----------------------------------------------------------------
-# >>> CARGA NUEVO TRATAMIENTO <<<
-#-----------------------------------------------------------------
-
-def validar_nombre_t(nombre_t):
-    # --> Verificar que el nombre no esté vacío
-    if not nombre_t.strip():
-         return "El nombre no puede estar vacío."
-
-    # --> Verificar que el nombre contenga solo letras (y posiblemente espacios)
-    if not re.match("^[A-Za-záéíóúÁÉÍÓÚÑñ\s]+$", nombre_t):
-         return "El nombre solo puede contener letras y espacios."
-
-    # --> Verificar que el nombre tenga una longitud razonable (por ejemplo, entre 2 y 50 caracteres)
-    if len(nombre_t) < 7 or len(nombre_t) > 50:
-         return "El nombre debe tener entre 2 y 50 caracteres."
-
-    #  --> Si pasa todas las validaciones
-    return "Nombre válido ✔"
-
-def validar_fecha_t(fecha_str, formato="%d/%m/%Y"): # --recibe: dia/mes/año
-    try:
-        # -- Para convertir la cadena a un objeto datetime según el formato dado (dia/mes/año)
-        fecha_t = datetime.strptime(fecha_str, formato)
-        # -- Si la conversión es exitosa, la fecha es válida
-        print( "Fecha válida.")
-        # -- Validación de fecha razonable: ejemplo, que no sea una fecha futura
-        if fecha_t > datetime.now():
-            print("La fecha no puede ser en el futuro.") 
-    except ValueError:
-        # -- Si ocurre un error en la conversión, la fecha es inválida
-        return f"Fecha inválida. Asegúrate de que el formato sea {formato}."
-
-def menu_tratamiento():
-     while True:
-         print("\n 🔸 Tratamientos: ")
-         print("\t\t 1- Carga")
-         print("\t\t 2- Ver Información de Paciente")
-         print("\t\t 3- Ver Listado Total")
-         print("\t\t 4- Volver al Menú Principal")
-
-         opcion = input("-> Seleccione una opcion: ")
-         if opcion == "1":
-            nuevo_tratamiento()
-         elif opcion == "2":
-            print ("ver info de tratamientos")
-         elif opcion =="3":
-            print ("Listado total de Tratamientos")
-         elif opcion =="4":
-            break
-         else :
-            print("Opción Inválida")
-
-
-def nuevo_tratamiento():
-    print("--------------------------------------- ")
-    print("💠 Ingrese los datos del Tratamiento: ")
-    print("--------------------------------------- ")
-
-    nombre_t = input ("Nombre: ") 
-        # --> valida campo
-    valido = validar_nombre_t(nombre_t)
-    print(valido)
-
-    fecha_t = input ("Fecha (dia/mes/año): ")
-        # --> valida campo
-    validado = validar_fecha_t(fecha_t)
-    print(validado)
-
-    # -- Carga diccionario
-    nuevo_t = {
-        "nombre": nombre_t,
-        "fecha_tratamiento": fecha_t,      
-    }
-
-    nuevo_t = p.carga_tabla(nuevo_t)
-    if nuevo_tratamiento():
-        print(nuevo_tratamiento['mensaje'])
-        
-    else:
-        print(nuevo_tratamiento['mensaje'])
-    
-  
-
-#-----------------------------------------------------------------
 # >>> MENU: <<<
 #-----------------------------------------------------------------
 while True:
@@ -404,28 +315,31 @@ while True:
         print(">>>>>  Sistema de Gestion de Pacientes de Centro de Estética  <<<<<")
         print ("------------------------------------------------------------------------")
         print("\t\t 1- Cargar Nuevo Paciente")
-        print("\t\t 2- Buscar Paciente")
-        print("\t\t 3- Modificar Datos")
-        print("\t\t 4- Mostrar Listado Total")  
-        print("\t\t 5- Mostrar Listado Ordenado")  
-        print("\t\t 6- Eliminar Datos de Paciente")
-        print("\t\t 7- Salir")
-
+        print("\t\t 2- Cargar Tratamiento")
+        print("\t\t 3- Buscar Paciente")
+        print("\t\t 4- Modificar Datos")
+        print("\t\t 5- Mostrar Listado Total")  
+        print("\t\t 6- Mostrar Listado Ordenado")  
+        print("\t\t 7- Eliminar Datos de Paciente")
+        print("\t\t 8- Salir")
+        
         opcion = input("\n--> Seleccione una opcion: ")
         if opcion =="1":
             nuevo_paciente()
         elif opcion =="2":
+            t.tratamientos()
+        elif opcion =="3":
             print ("\n--- Buscador 🔎 ---")
             resultado_busqueda() 
-        elif opcion =="3":
-            modificar()
         elif opcion =="4":
-            p.mostrar_pacientes()
+            modificar()
         elif opcion =="5":
+            p.mostrar_pacientes()
+        elif opcion =="6":
             ordenamiento()
-        elif opcion == "6":
+        elif opcion == "7":
             eliminar()
-        elif opcion =="7":
+        elif opcion =="8":
             print ("\n------------------------------------------------------------------------")
             print("\t\t >>>>>  Fin del Programa  <<<<<")
             print ("------------------------------------------------------------------------\n")
