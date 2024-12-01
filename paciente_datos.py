@@ -22,9 +22,15 @@ def carga_datos (paciente):
         db.commit()
 
         if creado:
-            return ("\n 🔸 Paciente Registrado Exitosamente 🔸 ✅")  
+            # cursor.close()
+            # db.close()
+            return {"respuesta": True,
+                "mensaje": "\n 🔸 Paciente Registrado  Exitosamente 🔸 ✅"}
         else:
-            return ("\n ❌❌ No se ha podido realizar la carga de datos. Aguarde e Intente Nuevamente... ❌❌")
+            # cursor.close()
+            # db.close()
+            return {"respuesta": True,
+                "mensaje": "\n ❌❌ No se ha podido realizar la carga de datos. Aguarde e Intente Nuevamente... ❌❌"}
         
     except Exception as e:
         # if "UNIQUE" in  str (e) and "DNI" in str (e):                 # --> verifica que sólo haya un paciente por DNI
@@ -254,3 +260,47 @@ def eliminar_paciente(id_paciente):
         cursor.close()
         db.close()
 
+#-----------------------------------------------------------------
+#  INGRESAR EN TABLA TRATAMIENTO
+# ----------------------------------------------------------------
+def carga_tabla (tratamiento):
+    tratamiento = dict (tratamiento)
+
+    try:
+        db = c.conectar()
+        cursor = db.cursor()
+        columnas = tuple(tratamiento.keys())     # -> cargo en el campo seleccionado
+        valores = tuple(tratamiento.values())    # -> cargo registros
+
+        sql = """
+              INSERT INTO tratamientos {campos} VALUES (?,?)
+              """.format (campos = columnas)
+
+        cursor.execute(sql, (valores))
+
+        creado = cursor.rowcount > 0
+        db.commit()
+
+        if creado:
+            return ("\n 🔸 Se Almacenó el Tratamiento! 🔸 ✅")  
+        else:
+            return ("\n ❌❌ No se ha podido realizar la carga ... ❌❌")
+        
+    except Exception as e:
+        # if "UNIQUE" in  str (e) and "DNI" in str (e):                 # --> verifica que sólo haya un paciente por DNI
+        #     mensaje = "Ya existe un Paciente registrada con ese DNI"
+        # elif "UNIQUE" in  str (e) and "MAIL" in str (e):              # --> verifica que sólo haya un MAIL por paciente
+        #     mensaje = "Ya existe un paciente que registró ese Mail, por favor indique otro..."
+        # elif "UNIQUE" in  str (e) and "CELULAR" in str (e):           # --> verifica que sólo haya un CELULAR por paciente
+        #     mensaje = "Ya existe un paciente que registró ese Celular de Contacto, por favor indique otro..."
+        # else:
+        mensaje = str(e) 
+            # cursor.close()
+            # db.close()
+             
+        return {"respuesta": False,
+                "mensaje": mensaje}
+    finally:
+        cursor.close()
+        db.close()
+    

@@ -1,6 +1,8 @@
 import conexion as c
 import paciente_datos as p
 import validar_datos as v
+import re
+from datetime import datetime
 
 #-----------------------------------------------------------------
 """
@@ -27,17 +29,17 @@ def nuevo_paciente():
     print("💠 Ingrese los datos del paciente: ")
     print("-------------------------------- ")
    # Validación de datos
-    nombre = input("\n🟢 Nombre: ").strip()
-    nombre = v.validar_entrada(nombre, "^[a-zA-ZáéíóúÁÉÍÓÚ ]+$", "\n🟠 Ingrese un nombre válido (solo letras y espacios): ")
+    nombre = input("\n🟢 Nombre: ").strip().title()
+    nombre = v.validar_entrada(nombre, "^[a-zA-ZáéíóúÁÉÍÓÚ ]{2,}$", "\n🟠 Ingrese un nombre válido (solo letras): ")
 
-    apellido = input("\n🟢 Apellido: ").strip()
-    apellido = v.validar_entrada(apellido, "^[a-zA-ZáéíóúÁÉÍÓÚ ]+$", "\n🟠 Ingrese un apellido válido (solo letras y espacios): ")
+    apellido = input("\n🟢 Apellido: ").strip().title()
+    apellido = v.validar_entrada(apellido, "^[a-zA-ZáéíóúÁÉÍÓÚ ]{2,}$", "\n🟠 Ingrese un apellido válido (solo letras): ")
 
     dni = input("\n🟢 DNI: ").strip()
     dni = v.validar_entrada(dni, "^[0-9]{7,8}$", "\n🟠 Ingrese un DNI válido (solo números, 7 u 8 dígitos): ")
-    dni = v.dni_repetido(dni, False)
+    # dni = v.dni_repetido(dni, False)
 
-    genero = input("\n🟢 Género: ").strip()
+    genero = input("\n🟢 Género: ").strip().upper()
     genero = v.validar_entrada(genero, "^[MF]$", "\n🟠 Ingrese un género válido (M/F): ").upper()
 
     mensaje = {
@@ -55,7 +57,7 @@ def nuevo_paciente():
     mail = v.validar_entrada(mail, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", "\n🟠 Ingrese un correo electrónico válido: ")
 
     domicilio = input("\n🟢 Domicilio: ").strip()
-    domicilio = v.validar_entrada(domicilio, "^[a-zA-Z0-9\s]+$", "\n🟠 Ingrese un domicilio válido (letras, números y espacios): ")
+    domicilio = v.validar_entrada(domicilio, "^[a-zA-Z0-9\s]+$", "\n🟠 Ingrese un domicilio válido (sólo letras y números): ")
 
 
 # -- Carga diccionario
@@ -141,20 +143,20 @@ def modificar():
     while True:
         if dato_a_modificar == "nombre":
             nuevo_valor = input("\n🟢 Ingrese el nuevo nombre: ").strip()
-            nuevo_valor = v.validar_entrada(nuevo_valor, "^[a-zA-ZáéíóúÁÉÍÓÚ ]+$", "\n🟠 Ingrese un nombre válido (solo letras y espacios): ")
+            nuevo_valor = v.validar_entrada(nuevo_valor, "^[a-zA-ZáéíóúÁÉÍÓÚ ]+$", "\n🟠 Ingrese un nombre válido (solo letras): ")
             paciente['nombre'] = nuevo_valor
             datos_modificados = True
             print(f"\n✅ Nombre actualizado a: {nuevo_valor}")
         elif dato_a_modificar == "apellido":
             nuevo_valor = input("\n🟢 Ingrese el nuevo apellido: ").strip()
-            nuevo_valor = v.validar_entrada(nuevo_valor, "^[a-zA-ZáéíóúÁÉÍÓÚ ]+$", "\n🟠 Ingrese un apellido válido (solo letras y espacios): ")
+            nuevo_valor = v.validar_entrada(nuevo_valor, "^[a-zA-ZáéíóúÁÉÍÓÚ ]+$", "\n🟠 Ingrese un apellido válido (solo letras): ")
             paciente['apellido'] = nuevo_valor
             datos_modificados = True
             print(f"\n✅ Apellido actualizado a: {nuevo_valor}")
         elif dato_a_modificar == "dni":
             nuevo_valor = input("\n🟢 Ingrese el nuevo DNI: ").strip()
             nuevo_valor = v.validar_entrada(nuevo_valor, "^[0-9]{7,8}$", "\n🟠 Ingrese un DNI válido (solo números, 7 u 8 dígitos): ")
-            nuevo_valor = v.dni_repetido(nuevo_valor, True)
+            # nuevo_valor = v.dni_repetido(nuevo_valor, True)
             paciente['dni'] = nuevo_valor
             datos_modificados = True
             print(f"\n✅ DNI actual: {nuevo_valor}")
@@ -311,10 +313,94 @@ def eliminar():
             print("\n❌ Opción no válida. Inténtelo de nuevo ❌")
 
 #-----------------------------------------------------------------
+# >>> CARGA NUEVO TRATAMIENTO <<<
+#-----------------------------------------------------------------
+
+def validar_nombre_t(nombre_t):
+    # --> Verificar que el nombre no esté vacío
+    if not nombre_t.strip():
+         return "El nombre no puede estar vacío."
+
+    # --> Verificar que el nombre contenga solo letras (y posiblemente espacios)
+    if not re.match("^[A-Za-záéíóúÁÉÍÓÚÑñ\s]+$", nombre_t):
+         return "El nombre solo puede contener letras y espacios."
+
+    # --> Verificar que el nombre tenga una longitud razonable (por ejemplo, entre 2 y 50 caracteres)
+    if len(nombre_t) < 7 or len(nombre_t) > 50:
+         return "El nombre debe tener entre 2 y 50 caracteres."
+
+    #  --> Si pasa todas las validaciones
+    return "Nombre válido ✔"
+
+def validar_fecha_t(fecha_str, formato="%d/%m/%Y"): # --recibe: dia/mes/año
+    try:
+        # -- Para convertir la cadena a un objeto datetime según el formato dado (dia/mes/año)
+        fecha_t = datetime.strptime(fecha_str, formato)
+        # -- Si la conversión es exitosa, la fecha es válida
+        print( "Fecha válida.")
+        # -- Validación de fecha razonable: ejemplo, que no sea una fecha futura
+        if fecha_t > datetime.now():
+            print("La fecha no puede ser en el futuro.") 
+    except ValueError:
+        # -- Si ocurre un error en la conversión, la fecha es inválida
+        return f"Fecha inválida. Asegúrate de que el formato sea {formato}."
+
+def menu_tratamiento():
+     while True:
+         print("\n 🔸 Tratamientos: ")
+         print("\t\t 1- Carga")
+         print("\t\t 2- Ver Información de Paciente")
+         print("\t\t 3- Ver Listado Total")
+         print("\t\t 4- Volver al Menú Principal")
+
+         opcion = input("-> Seleccione una opcion: ")
+         if opcion == "1":
+            nuevo_tratamiento()
+         elif opcion == "2":
+            print ("ver info de tratamientos")
+         elif opcion =="3":
+            print ("Listado total de Tratamientos")
+         elif opcion =="4":
+            break
+         else :
+            print("Opción Inválida")
+
+
+def nuevo_tratamiento():
+    print("--------------------------------------- ")
+    print("💠 Ingrese los datos del Tratamiento: ")
+    print("--------------------------------------- ")
+
+    nombre_t = input ("Nombre: ") 
+        # --> valida campo
+    valido = validar_nombre_t(nombre_t)
+    print(valido)
+
+    fecha_t = input ("Fecha (dia/mes/año): ")
+        # --> valida campo
+    validado = validar_fecha_t(fecha_t)
+    print(validado)
+
+    # -- Carga diccionario
+    nuevo_t = {
+        "nombre": nombre_t,
+        "fecha_tratamiento": fecha_t,      
+    }
+
+    nuevo_t = p.carga_tabla(nuevo_t)
+    if nuevo_tratamiento():
+        print(nuevo_tratamiento['mensaje'])
+        
+    else:
+        print(nuevo_tratamiento['mensaje'])
+    
+  
+
+#-----------------------------------------------------------------
 # >>> MENU: <<<
 #-----------------------------------------------------------------
 while True:
-        print ("------------------------------------------------------------------------")
+        print ("\n------------------------------------------------------------------------")
         print(">>>>>  Sistema de Gestion de Pacientes de Centro de Estética  <<<<<")
         print ("------------------------------------------------------------------------")
         print("\t\t 1- Cargar Nuevo Paciente")

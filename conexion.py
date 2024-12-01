@@ -27,17 +27,6 @@ def conectar ():
               ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
               NOMBRE TEXT NOT NULL,
               FECHA TEXT NOT NULL
-              );
-
-              CREATE TABLE IF NOT EXISTS pacientes_tratamientos
-             (
-              ID INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
-              DIAGNOSTICO TEXT NOT NULL UNIQUE,
-              AVANCES TEXT NOT NULL UNIQUE,
-              ID_PACIENTES INTEGER,
-              ID_TRATAMIENTOS INTEGER,
-              FOREIGN KEY(ID_PACIENTES) REFERENCES pacientes(id),
-              FOREIGN KEY(ID_TRATAMIENTOS) REFERENCES tratamientos(id)
               )
               """
         cursor.executescript(sql)       # para ejecutar multiples instrucciones... sino sería execute. ❌
